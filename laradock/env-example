@@ -5,7 +5,7 @@
 ### Application Path ###################################################################################################
 # Point to your code, will be available at `/var/www`.
 
-APPLICATION=../blog/
+APPLICATION=../project_api/
 
 ### PHP Version ########################################################################################################
 # Select a PHP version of the Workspace and PHP-FPM containers (Does not apply to HHVM). Accepted values: 71 - 70 - 56
