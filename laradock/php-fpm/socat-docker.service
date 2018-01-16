@@ -1,0 +1,13 @@
+[Unit]
+Description=Forked socket /run/docker.sock with socat
+Requires=multi-user.target
+After=multi-user.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=socat UNIX-LISTEN:/run/docker-forked.sock,user=www-data,group=www-data,mode=0600,fork UNIX-CLIENT:/run/dock$
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
