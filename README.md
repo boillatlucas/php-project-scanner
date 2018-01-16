@@ -14,7 +14,7 @@
 ## Installation
 
 1. Cloner ce repot git
-2. Entrer dans le dossier cloné
+2. Entrer dans le dossier cloné **laradock**
 3. Copier le fichier env-example :
 ```
 cp env-example .env
@@ -26,3 +26,12 @@ docker-compose up -d
 ```
 
 5. Enjoy ! :)
+
+
+## Utilisation
+
+- **App Laravel** : http://localhost:8888
+- **PhpMyAdmin** : http://localhost:8080
+- **RabbitMQ (interface)** : http://localhost:15672
+- **MailDev** : http://localhost:1080
+
