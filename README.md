@@ -35,3 +35,8 @@ docker-compose up -d
 - **RabbitMQ (interface)** : http://localhost:15672
 - **MailDev** : http://localhost:1080
 
+Pour aller dans le dossier de l'application laravel en ligne de commande : 
+```
+docker-compose exec workspace bash
+```
+
