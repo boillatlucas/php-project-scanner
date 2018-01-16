@@ -35,3 +35,14 @@ docker-compose up -d
 - **RabbitMQ (interface)** : http://localhost:15672
 - **MailDev** : http://localhost:1080
 
+- Pour la première fois, créer la database 'phpscanner' sur phpmyadmin
+
+```
+php artisan migrate:install
+``` 
+
+- Lancer la migration (création des tables de la bdd) et des seed (poulation des tables de la bdd) :
+```
+php artisan migrate:refresh --seed
+``` 
+
