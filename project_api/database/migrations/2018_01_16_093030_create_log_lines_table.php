@@ -16,6 +16,8 @@ class CreateLogLinesTable extends Migration
         Schema::table('log_lines', function (Blueprint $table) {
             $table->increments('id');
             $table->text('content');
+            $table->integer('log_id')->unsigned();
+            $table->foreign('log_id')->references('id')->on('logs');
             $table->timestamps();
         });
     }

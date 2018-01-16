@@ -15,8 +15,12 @@ class CreateLogsTable extends Migration
     {
         Schema::table('logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->integer('status');
+            $table->string('title', 20);
+            $table->string('status', 50);
+            $table->integer('project_id')->unsigned();
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->integer('log_type_id')->unsigned();
+            $table->foreign('log_type_id')->references('id')->on('log_types');
             $table->timestamps();
         });
     }

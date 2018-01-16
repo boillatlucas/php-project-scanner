@@ -15,7 +15,7 @@ class CreateLogTypesTable extends Migration
     {
         Schema::table('log_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
+            $table->string('type', 100);
         });
     }
 
