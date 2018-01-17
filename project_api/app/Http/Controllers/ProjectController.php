@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\LogLine;
-use Illuminate\Http\Request;
+use App\Mail\NotifyStep;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectController extends Controller
 {
@@ -13,9 +14,19 @@ class ProjectController extends Controller
        if(empty($logs->toArray())){
            return response()->json(array('return_code'=>"OK", 'error'=>"No logs for this project."));
        }
+       $logs_email = array();
        foreach ($logs as $log) {
            array_push($logs_return['return'], $log);
+           $logs_email[$log->log->log_type->type][] = $log;
        }
+       //dump($logs_email);
+       self::_sendEmail(['email' => 'dimitri.sandron@outlook.fr', 'name' => "Dimitri Sandron"], $logs_email, $logs->first()->log);
        return response()->json($logs_return);
    }
+
+
+    private function _sendEmail($destinataire, $logs, $infos_log_project){
+        Mail::to($destinataire['email'], $destinataire['name'])->send(new NotifyStep($logs, $infos_log_project));
+    }
+
 }
