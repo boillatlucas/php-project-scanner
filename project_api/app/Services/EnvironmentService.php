@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Psr7\Request;
 use Http\Client\Socket\Client as Client;
 
 class EnvironmentService
@@ -19,34 +18,138 @@ class EnvironmentService
     private $client;
 
     /**
+     * @var bool
+     */
+    private $isDebug;
+
+    /**
+     * @var array
+     */
+    private $debug = [];
+
+    /**
      * EnvironmentService constructor.
      */
-    public function __construct()
+    public function __construct(bool $isDebug = false)
     {
         $this->client = new Client(null, [
             'remote_socket' => 'unix:///run/docker.sock',
             'ssl' => false,
         ]);
+
+        $this->isDebug = $isDebug;
     }
 
-    public function create(string $name)
+    /**
+     * @param string $name
+     * @param string $image
+     * @param array $parameters
+     * @return null|string
+     */
+    public function createContainer(string $name, string $image, array $parameters = []): ?string
     {
-//        $a = $this->client->sendRequest(new Request('GET', 'http:/version',[
-//            'Content-Type' => 'application/json',
-//            'Host' => '0.0.0.0',
-//        ]))->getBody()->getContents();
+        $endpoint = 'containers/create?name='.$name;
+        $parameters['Image'] = $image;
+
+        return $this->execute('POST', $endpoint, $parameters);
+    }
+
+    /**
+     * @param string $id
+     * @return null|string
+     */
+    public function startContainer(string $id)
+    {
+        return $this->execute('POST', 'containers/'.$id.'/start');
+    }
+
+    /**
+     * @param string $id
+     * @param array $command
+     * @return null|string
+     */
+    public function createCommand(string $id, array $command): ?string
+    {
+        $parameters = [
+            'Cmd' => $command,
+            'AttachStdout' => true,
+            'Tty' => true,
+        ];
+
+        return $this->execute('POST', 'containers/'.$id.'/exec', $parameters);
+    }
+
+    /**
+     * @param string $id
+     * @return null|string
+     */
+    public function startCommand(string $id): ?string
+    {
+        return $this->execute('POST', 'exec/'.$id.'/start', ['Detach' => false, 'Tty' => true]);
+    }
+
+    /**
+     * Stop a container, kill after $timeout
+     * @param string $id
+     * @param int $timeout (seconds)
+     * @param bool $waitUntilStop
+     * @return null|string
+     */
+    public function stopContainer(string $id, int $timeout = 8, bool $waitUntilStop = true): ?string
+    {
+        $shell = $this->execute('POST', '/containers/'.$id.'/stop?t='.$timeout);
+//        $shell = $this->execute('POST', '/containers/'.$id.'/kill');
+
+        if ($waitUntilStop) {
+            $this->execute('POST', '/containers/'.$id.'/wait');
+        }
+
+        return $shell;
+    }
 
 
+    public function rmContainer(string $id): ?string
+    {
+        return $this->execute('DELETE', '/containers/'.$id.'?force=true');
+    }
 
-        $post = '{"Image": "alpine", "Cmd": ["echo", "hello world"]}';
-        $a = $this->client->sendRequest(new Request('POST', 'http:/v1.24/containers/create?name=test',
-            [
-                'Content-Type' => 'application/json',
-                'Host' => '0.0.0.0',
-                'body' => ['Image' => 'alpine'],
-            ]
-        ))->getBody()->getContents();
+    /**
+     * @param string $id
+     * @return null|string
+     */
+    public function inspectCommand(string $id)
+    {
+        return $this->execute('GET', 'exec/'.$id.'/json');
 
-        dump($a);die;
+    }
+
+    /**
+     * @param string $method
+     * @param string $endpoint
+     * @param array $parameters
+     * @return string
+     */
+    private function execute(string $method, string $endpoint, array $parameters = []): ?string
+    {
+        $exec = 'curl --unix-socket /run/docker.sock -H "Content-Type: application/json"';
+
+        if (!empty($parameters)) {
+            $exec .= ' -d \''.\GuzzleHttp\json_encode($parameters).'\'';
+        }
+
+        $exec .= ' -X '.strtoupper($method).' http:/172.17.0.1/'.ltrim($endpoint, '/');
+        $shell = shell_exec($exec);
+
+        if ($this->isDebug) {
+            $this->debug['command'][] = $exec;
+            $this->debug['logs'][] = $shell;
+        }
+
+        return $shell;
+    }
+
+    public function getDebug(): array
+    {
+        return $this->debug;
     }
 }
