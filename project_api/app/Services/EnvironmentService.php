@@ -98,7 +98,6 @@ class EnvironmentService
     public function stopContainer(string $id, int $timeout = 8, bool $waitUntilStop = true): ?string
     {
         $shell = $this->execute('POST', '/containers/'.$id.'/stop?t='.$timeout);
-//        $shell = $this->execute('POST', '/containers/'.$id.'/kill');
 
         if ($waitUntilStop) {
             $this->execute('POST', '/containers/'.$id.'/wait');
