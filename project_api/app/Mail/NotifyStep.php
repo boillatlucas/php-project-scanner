@@ -24,7 +24,7 @@ class NotifyStep extends Mailable
     {
         $this->logs = $logs;
         $this->infos_log_project = $infos_log_project;
-    }
+    }}
 
     /**
      * Build the message.

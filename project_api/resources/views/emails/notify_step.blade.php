@@ -9,7 +9,7 @@
 </head>
 <body width="100%" bgcolor="#eaeaea" style="margin: 0; mso-line-height-rule: exactly; color: #363636;">
 <center style="width: 100%; background: #eaeaea; text-align: left;">
-    <table cellspacing="0" cellpadding="0" border="0" align="center" width="800" style="margin: auto;">
+    <table cellspacing="0" cellpadding="0" border="0" align="center" width="90%" style="margin: auto;">
         <tr>
             <td style="padding: 20px 0; text-align: center; color: #202020;">
                 <h1>Votre analyse PHP a été terminée !</h1>
@@ -26,7 +26,7 @@
     </table>
 
     <!-- Clear Spacer : BEGIN -->
-    <table cellspacing="0" cellpadding="0" border="0" align="center" width="800" style="margin: auto;">
+    <table cellspacing="0" cellpadding="0" border="0" align="center" width="90%" style="margin: auto;">
         <tr>
             <td aria-hidden="true" height="40" style="font-size: 0; line-height: 0; border-bottom:solid #1d1d1d 2px;">
                 &nbsp;
@@ -35,7 +35,7 @@
     </table>
     <!-- Clear Spacer : END -->
 
-    <table cellspacing="0" cellpadding="0" border="0" align="center" width="800" style="margin: auto;">
+    <table cellspacing="0" cellpadding="0" border="0" align="center" width="90%" style="margin: auto;">
         <tr>
             <td style="padding: 20px 0; text-align: center">
                 <h2>Résultat de l'analyse :</h2>
@@ -47,7 +47,7 @@
                 <td style="padding: 20px 0; text-align: left">
                     <h3>{{ $type }}</h3>
                     @foreach($log as $key => $log_line)
-                        <p>{{ $key }} : {{ $log_line->content }}</p>
+                        <p style="width:100%; word-wrap: break-word;">{{ $key + 1 }} : {{ nl2br($log_line->content) }}</p>
                     @endforeach
                 </td>
             </tr>
@@ -61,7 +61,7 @@
     </table>
 
     <!-- Clear Spacer : BEGIN -->
-    <table cellspacing="0" cellpadding="0" border="0" align="center" width="800" style="margin: auto;">
+    <table cellspacing="0" cellpadding="0" border="0" align="center" width="90%" style="margin: auto;">
         <tr>
             <td aria-hidden="true" height="40" style="font-size: 0; line-height: 0; border-bottom:solid #1d1d1d 2px;">
                 &nbsp;
