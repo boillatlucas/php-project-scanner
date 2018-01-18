@@ -82,9 +82,12 @@ services:
       volumes_from:
         - applications
       volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       expose:
         - "9000"
+      ports:
+        - "2375:2375"
       depends_on:
         - workspace
       extra_hosts:
@@ -104,6 +107,8 @@ services:
           - INSTALL_PGSQL=${PHP_WORKER_INSTALL_PGSQL}
       volumes_from:
         - applications
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
       depends_on:
         - workspace
       extra_hosts:

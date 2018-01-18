@@ -15,7 +15,7 @@ interface AnalyzerToolInterface
      * You need to follow this structure
      *
      * [
-     *      'you-command' => [
+     *      'your-command' => [
      *          'arg1',
      *          'arg2',
      *      ]
@@ -23,25 +23,26 @@ interface AnalyzerToolInterface
      *
      * @return array
      */
-    function getCommand(): array;
+
+    public function getCommand(): array;
 
     /**
      * @param string $output Set the plain output from command execution
      * @return mixed
      */
-    function setOutput(string $output);
+    public function setOutput(string $output);
 
     /**
      * Return all formated lines as array
      *
      * @return array
      */
-    function getLines(): array;
+    public function getLines(): array;
 
     /**
      * Return if command is success or not
      *
      * @return bool
      */
-    function isSuccess(): bool ;
+    public function isSuccess(): bool;
 }
