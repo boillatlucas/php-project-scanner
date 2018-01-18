@@ -38,6 +38,7 @@
     <table cellspacing="0" cellpadding="0" border="0" align="center" width="90%" style="margin: auto;">
         <tr>
             <td style="padding: 20px 0; text-align: center">
+                <img src="{{ $message->embed('img/search.svg') }}" alt="Loupe résultat rapport" height="75"/>
                 <h2>Résultat de l'analyse :</h2>
             </td>
         </tr>
@@ -46,9 +47,11 @@
             <tr>
                 <td style="padding: 20px 0; text-align: left">
                     <h3>{{ $type }}</h3>
-                    @foreach($log as $key => $log_line)
-                        <p style="width:100%; word-wrap: break-word;">{{ $key + 1 }} : {{ nl2br($log_line->content) }}</p>
-                    @endforeach
+                    <div style="background-color: #1d1d1d; color: #fff; font-family: 'Courier New'; font-size: 12px; border: solid #9c9c9c 1px; border-radius: 5px; padding: 10px;">
+                        @foreach($log as $key => $log_line)
+                            <p style="width:100%; word-wrap: break-word;">{{ $key + 1 }} : {{ nl2br($log_line->content) }}</p>
+                        @endforeach
+                    </div>
                 </td>
             </tr>
             <tr>
