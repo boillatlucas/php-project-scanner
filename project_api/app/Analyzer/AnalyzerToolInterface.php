@@ -23,6 +23,7 @@ interface AnalyzerToolInterface
      *
      * @return array
      */
+
     public function getCommand(): array;
 
     /**
