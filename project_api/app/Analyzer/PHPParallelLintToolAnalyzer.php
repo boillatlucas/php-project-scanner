@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: apprenant
  * Date: 18/01/18
- * Time: 11:51
+ * Time: 11:12
  */
 
 namespace App\Analyzer;
 
 
-class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
+class PHPParallelLintToolAnalyzer extends BaseAnalyzer
 {
     /**
      * You need to follow this structure
@@ -29,11 +29,11 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
             'composer' => [
                 'global',
                 'require',
-                'wapmorgan/php-code-fixer',
+                'jakub-onderka/php-parallel-lint',
             ],
-            '/root/.composer/vendor/bin/phpcf' => [
-                'project',
-            ],
+            '/root/.composer/vendor/bin/parallel-lint' => [
+                'project'
+            ]
         ];
     }
 
@@ -47,9 +47,10 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
         if($line_without_tab == "No syntax error found"){
             $this->isSuccess = true;
         }
-        if($line_without_tab == "Scanning project ..."){
+        if(preg_match('/^[.]*+[[:space:]]*[\d]*+\/+[\d]*+[[:space:]]\([\d]*[[:space:]]%\)$/', $line_without_tab)){
             $line_without_tab = "";
         }
         return $line_without_tab;
     }
+
 }

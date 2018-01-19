@@ -19,19 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/testScan/', function () {
-    $outil = new \App\Analyzer\PhpParallelLintToolAnalyzer();
-    $command = $outil->getCommand();
-    $command_base = array_keys($command)[0];
-    dump($command);
-    dump($command[$command_base]);
-    $exec = exec($command_base[0] . " " . $command[$command_base][0], $output, $return_val);
-    dump($command_base . " " . $command[$command_base][0]);
-    dump($output);
-    dump($return_val);
-    dump($exec);
-});
-
 Route::get('/project/', function (){
     return response()->json(array('return_code'=>"FAILED", 'error'=>"Missing slug parameter."));
 });
