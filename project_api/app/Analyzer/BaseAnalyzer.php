@@ -86,7 +86,7 @@ abstract class BaseAnalyzer implements AnalyzerToolInterface
      *
      * @return bool
      */
-    function isSuccess(): bool
+    public function isSuccess(): bool
     {
         return $this->isSuccess;
     }

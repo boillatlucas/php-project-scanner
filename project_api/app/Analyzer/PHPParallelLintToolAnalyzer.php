@@ -53,4 +53,14 @@ class PHPParallelLintToolAnalyzer extends BaseAnalyzer
         return $line_without_tab;
     }
 
+    public static function getName(): string
+    {
+        return 'PHPCPD';
+    }
+
+    public static function getType(): string
+    {
+        return 'syntax';
+    }
+
 }

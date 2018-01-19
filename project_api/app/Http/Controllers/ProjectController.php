@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\LogLine;
-use Illuminate\Http\Request;
+use App\Project;
+use App\Mail\NotifyStep;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectController extends Controller
 {
    public function getLogs($slug){
-       $logs = LogLine::all()->where('log.project.slug', $slug)->load('log.project', 'log.log_type');
-       $logs_return = array('return_code'=>'OK', 'count_result'=>count($logs->toArray()), 'return'=>array());
-       if(empty($logs->toArray())){
-           return response()->json(array('return_code'=>"OK", 'error'=>"No logs for this project."));
+       $project_logs = Project::with('logs', 'logs.logs_lines', 'logs.log_type')->where('slug', $slug)->first();
+       if(empty($project_logs->toArray())){
+           return response()->json(array('return_code'=>"FAILED", 'error'=>"No logs for this project."));
        }
-       foreach ($logs as $log) {
-           array_push($logs_return['return'], $log);
-       }
+       $logs_return = array('return_code'=>'OK', 'count_result'=>count($project_logs->logs), 'return'=>$project_logs);
        return response()->json($logs_return);
    }
+
 }

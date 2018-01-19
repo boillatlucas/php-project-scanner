@@ -52,4 +52,14 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
         }
         return $line_without_tab;
     }
+
+    public static function getName(): string
+    {
+        return 'PHPCodeFixer';
+    }
+
+    public static function getType(): string
+    {
+        return 'stats';
+    }
 }

@@ -8,7 +8,6 @@
 
 namespace App\Analyzer;
 
-
 class PHPCpdToolAnalyzer extends BaseAnalyzer
 {
 
@@ -49,5 +48,15 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
             $this->isSuccess = true;
         }
         return $line_without_tab;
+    }
+
+    public static function getName(): string
+    {
+        return 'PHPCPD';
+    }
+
+    public static function getType(): string
+    {
+        return 'stats';
     }
 }

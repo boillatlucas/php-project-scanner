@@ -15,7 +15,12 @@ class Log extends Model
 
     public function log_type()
     {
-        return $this->belongsTo('App\LogType');
+        return $this->belongsTo('App\LogType')->orderBy('type', 'asc');
+    }
+
+    public function logs_lines()
+    {
+        return $this->hasMany('App\LogLine');
     }
 
 }
