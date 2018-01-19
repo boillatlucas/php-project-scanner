@@ -24,3 +24,6 @@ Route::get('/project/', function (){
 });
 
 Route::get('/project/{slug}', 'ProjectController@getLogs')->name('project_get_log');
+
+Route::post('/project', 'AnalyzerController@request')->name('project_request');
+
