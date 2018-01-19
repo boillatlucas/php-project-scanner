@@ -11,26 +11,32 @@ namespace App\Http\Controllers;
 
 use App\Analyzer\Analyzer;
 use App\Analyzer\PHPCodeFixerToolAnalyzer;
+use App\Log;
+use App\LogLine;
+use App\LogType;
+use App\Project;
+use App\Services\ProjectAnalyzer;
+use Illuminate\Http\Request;
 
 class AnalyzerController extends Controller
 {
-    /**
-     * Main entry for analyses
-     *
-     *
-     * @param string $slug
-     */
-    public function analyze(string $slug)
+    public function request(Request $request)
     {
-        $fixer = new PHPCodeFixerToolAnalyzer();
-        $analyzer = new Analyzer();
+        $repository = $request->request->get('repository');
+        $email = $request->request->get('email');
+        $slug = str_slug(md5($repository).uniqid());
 
-        $analyzer->run(
-            'wooot'.mt_rand(0,1500),
-            'https://github.com/boillatlucas/php-project-scanner.git',
-            [$fixer]
-        );
+        $project = new Project();
+        $project->slug = $slug;
+        $project->email = $email;
+        $project->repository_url = $repository;
+        $project->save();
 
-        // dump($fixer->formatOutput()->getLines());
+        \Amqp::publish('project_consume', $slug, ['queue' => 'analyze']);
+    }
+
+    public function analyze()
+    {
+        ProjectAnalyzer::analyze();
     }
 }
