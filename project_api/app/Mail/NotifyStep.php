@@ -11,19 +11,16 @@ class NotifyStep extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $logs;
-    protected $infos_log_project;
+    protected $project_logs;
 
     /**
      * Create a new message instance.
      *
-     * @param $logs
-     * @param $infos_log_project
+     * @param $project_logs
      */
-    public function __construct($logs, $infos_log_project)
+    public function __construct($project_logs)
     {
-        $this->logs = $logs;
-        $this->infos_log_project = $infos_log_project;
+        $this->project_logs = $project_logs;
     }
 
     /**
@@ -35,8 +32,7 @@ class NotifyStep extends Mailable
     {
         return $this->view('emails.notify_step')
             ->with([
-                'logs' => $this->logs,
-                'infos_log_project' => $this->infos_log_project,
+                'project_logs' => $this->project_logs,
             ]);
     }
 }
