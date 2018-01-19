@@ -15,7 +15,7 @@ class LogLinesTableSeeder extends Seeder
     {
         for($i=0; $i<30; $i++){
             DB::table('log_lines')->insert([
-                'content' => str_random(1000),
+                'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum dolor ac odio faucibus elementum. Nam pellentesque mollis augue vel bibendum. Donec pharetra felis in ipsum iaculis finibus. Ut at metus velit. Nullam vel nisi et ante mollis vestibulum vitae ac nisi. Nam lobortis massa posuere mi porta, eget dapibus lectus hendrerit. Etiam lacinia aliquam efficitur.",
                 'log_id' => rand(1,20),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
