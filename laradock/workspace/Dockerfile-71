@@ -239,6 +239,15 @@ USER root
 COPY ./crontab /etc/cron.d
 RUN chmod -R 644 /etc/cron.d
 
+# Upgrade curl to 7.50.2 we use --unix-socket
+WORKDIR /tmp
+ADD http://curl.haxx.se/download/curl-7.50.2.tar.bz2 curl-7.50.2.tar.bz2
+RUN tar -xvjf curl-7.50.2.tar.bz2
+WORKDIR /tmp/curl-7.50.2
+RUN ./configure && make && make install
+RUN ldconfig
+RUN export DEBIAN_FRONTEND=noninteractive && dpkg-reconfigure curl
+
 #
 #--------------------------------------------------------------------------
 # Final Touch
