@@ -63,9 +63,8 @@ class Analyzer
      */
     private function createContext(string $name, string $repository)
     {
-        $json = \GuzzleHttp\json_decode(
-            $this->environment->createContainer($name, 'laradock/workspace:2.0-71')
-        );
+        $json = \GuzzleHttp\json_decode($this->environment->createContainer($name, 'laradock/workspace:2.0-71'));
+
         $this->context['containerId'] = $json->Id;
 
         $this->environment->startContainer($this->context['containerId']);

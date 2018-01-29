@@ -47,6 +47,8 @@ services:
         dockerfile: "Dockerfile-${PHP_VERSION}"
       volumes_from:
         - applications
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
       ports:
