@@ -9,6 +9,7 @@
 namespace App\Services;
 
 use Http\Client\Socket\Client as Client;
+use Illuminate\Support\Facades\Log;
 
 class EnvironmentService
 {
@@ -136,8 +137,10 @@ class EnvironmentService
             $exec .= ' -d \''.\GuzzleHttp\json_encode($parameters).'\'';
         }
 
-        $exec .= ' -X '.strtoupper($method).' http:/172.17.0.1/'.ltrim($endpoint, '/');
+        $exec .= ' -X '.strtoupper($method).' http:/'.ltrim($endpoint, '/');
         $shell = shell_exec($exec);
+
+        Log::info('['.self::class.'::execute]', ['command' => $exec, 'output' => $shell]);
 
         if ($this->isDebug) {
             $this->debug['command'][] = $exec;
