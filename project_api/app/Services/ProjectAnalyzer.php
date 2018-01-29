@@ -22,9 +22,12 @@ use Illuminate\Support\Facades\Mail;
 
 class ProjectAnalyzer
 {
+
     public static function analyze()
     {
+
         \Amqp::consume('analyze', function ($message, $resolver) {
+
             $project = Project::where('slug', '=', $message->body)->first();
 
             if ($project === null) {
@@ -72,10 +75,18 @@ class ProjectAnalyzer
             $project->analyzed = new \DateTime();
             $project->save();
 
-            Mail::to($project->email, $project->email)->send(new NotifyStep($project));
+            try
+            {
+                Mail::to($project->email, $project->email)->send(new NotifyStep($project));
+            }
+            catch (\Exception $e)
+            {
+                return $e->getMessage();
+            }
 
             $resolver->acknowledge($message);
             $resolver->stopWhenProcessed();
         });
+
     }
 }

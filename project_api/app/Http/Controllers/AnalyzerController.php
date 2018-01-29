@@ -24,9 +24,12 @@ class AnalyzerController extends Controller
         $project->slug = $slug;
         $project->email = $email;
         $project->repository_url = $repository;
-        $project->save();
-
-        \Amqp::publish('project_consume', $slug, ['queue' => 'analyze']);
+        if($project->save()){
+            \Amqp::publish('project_consume', $slug, ['queue' => 'analyze']);
+            return response()->json(array('return_code'=>'OK', 'return'=>$project));
+        }else{
+            return response()->json(array('return_code'=>"FAILED", 'error'=>"Save error."));
+        }
     }
 
     public function analyze()
