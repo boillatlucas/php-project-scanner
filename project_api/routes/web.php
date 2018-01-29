@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/project/analyze/{slug}', [
+Route::get('/project/analyze/', [
     'as' => 'project_analyze', 'uses' => 'AnalyzerController@analyze'
 ]);
 

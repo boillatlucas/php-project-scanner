@@ -8,12 +8,6 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Analyzer\Analyzer;
-use App\Analyzer\PHPCodeFixerToolAnalyzer;
-use App\Log;
-use App\LogLine;
-use App\LogType;
 use App\Project;
 use App\Services\ProjectAnalyzer;
 use Illuminate\Http\Request;

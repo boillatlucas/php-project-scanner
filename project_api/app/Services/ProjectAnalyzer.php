@@ -8,13 +8,17 @@
 
 namespace App\Services;
 
-
 use App\Analyzer\Analyzer;
 use App\Analyzer\PHPCodeFixerToolAnalyzer;
+use App\Analyzer\PHPCpdToolAnalyzer;
+use App\Analyzer\PHPLocToolAnalyzer;
+use App\Analyzer\PHPParallelLintToolAnalyzer;
 use App\Log;
 use App\LogLine;
 use App\LogType;
+use App\Mail\NotifyStep;
 use App\Project;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectAnalyzer
 {
@@ -28,6 +32,9 @@ class ProjectAnalyzer
             }
 
             $classes[] = new PHPCodeFixerToolAnalyzer();
+            $classes[] = new PHPParallelLintToolAnalyzer();
+            $classes[] = new PHPLocToolAnalyzer();
+            $classes[] = new PHPCpdToolAnalyzer();
             $analyzer = new Analyzer();
 
             $analyzer->run(
@@ -65,6 +72,7 @@ class ProjectAnalyzer
             $project->analyzed = new \DateTime();
             $project->save();
 
+            Mail::to($project->email, $project->email)->send(new NotifyStep($project));
 
             $resolver->acknowledge($message);
             $resolver->stopWhenProcessed();
