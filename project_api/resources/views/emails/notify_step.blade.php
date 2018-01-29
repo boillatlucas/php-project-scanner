@@ -12,7 +12,7 @@
     <table cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="margin: auto;">
         <tr style="width: 100%; display: flex; background-color: #c1c1c1;">
             <td style="padding: 20px 20px; text-align: center; color: #202020; width: 10%;">
-                <img src="{{ $message->embed('img/search.svg') }}" alt="Loupe résultat rapport" height="75"/>
+                <img src="{{ $message->embed(public_path() . '/img/search.svg') }}" alt="Loupe résultat rapport" height="75"/>
             </td>
             <td style="padding: 20px 0; text-align: center; color: #202020; width: 90%;">
                 <h1>Votre analyse PHP a été terminée !</h1>
