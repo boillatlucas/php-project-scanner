@@ -233,6 +233,12 @@ RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
     apt-get install -y --force-yes imagemagick php-imagick \
 ;fi
 
+RUN apt-get install -y php7.1-bcmath
+
+USER root
+COPY ./crontab /etc/cron.d
+RUN chmod -R 644 /etc/cron.d
+
 #
 #--------------------------------------------------------------------------
 # Final Touch

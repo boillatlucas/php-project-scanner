@@ -366,6 +366,8 @@ RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
 #--------------------------------------------------------------------------
 #
 
+RUN docker-php-ext-install -j$(nproc) bcmath && docker-php-ext-enable bcmath
+
 ADD ./laravel.ini /usr/local/etc/php/conf.d
 ADD ./xlaravel.pool.conf /usr/local/etc/php-fpm.d/
 
