@@ -27,3 +27,7 @@ Route::get('/project/{slug}', 'ProjectController@getLogs')->name('project_get_lo
 
 Route::post('/project', 'AnalyzerController@request')->name('project_request');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
