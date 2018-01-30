@@ -52,5 +52,5 @@ Plusieurs projets peuvent être demandés à être analyser. Lorsqu'un projet es
 
 Afin d'utiliser l'API, un token est requis.
 
-[Voir comment utiliser l'API ici](./docs/API Usage.md)
+[Voir comment utiliser l'API ici](php-project-scanner/docs/API Usage.md)
 
