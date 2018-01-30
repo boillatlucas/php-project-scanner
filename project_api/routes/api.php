@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('login', 'API\PassportController@login');
 Route::post('register', 'API\PassportController@register');
 
@@ -28,4 +24,6 @@ Route::group(['middleware' => 'auth:api'], function(){
         return response()->json(array('return_code'=>"FAILED", 'error'=>"Missing slug parameter."));
     });
     Route::get('project/{slug}', 'ProjectController@getLogs')->name('project_get_log');
+    Route::get('user-projects/{analyzed?}', 'ProjectController@getProjectsUserConnected')->name('user_get_projects');
+    Route::post('logout','API\PassportController@logoutApi');
 });

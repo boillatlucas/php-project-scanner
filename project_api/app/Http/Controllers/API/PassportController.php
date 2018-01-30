@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Console\Parser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -32,6 +33,7 @@ class PassportController extends Controller
     /**
      * Register api
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function register(Request $request)
@@ -49,11 +51,29 @@ class PassportController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
+        $user_exist = User::where('email', $input['email'])->first();
+        if($user_exist){
+            return response()->json(['error' => "Un user avec cet email existe déjà."], 401);
+        }
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['name'] = $user->name;
 
         return response()->json(['success' => $success], $this->successStatus);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logoutApi(Request $request)
+    {
+        if (Auth::check()) {
+            $request->user()->token()->revoke();
+            return response()->json(['success' => "You are logout"], $this->successStatus);
+        }else{
+            return response()->json(['error' => "You are not logged in."], 401);
+        }
     }
 
     /**
