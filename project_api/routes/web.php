@@ -11,12 +11,6 @@
 |
 */
 
-// TODO : sécuriser l'accès à l'analyse ?
-
-Route::get('/project/analyze/', [
-    'as' => 'project_analyze', 'uses' => 'AnalyzerController@analyze'
-]);
-
 Route::get('/', function () {
     return view('welcome');
 });

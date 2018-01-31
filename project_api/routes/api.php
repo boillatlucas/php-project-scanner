@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('login', function (){
+    return view('errors.404');
+})->name('login');
 Route::post('login', 'API\PassportController@login');
 Route::post('register', 'API\PassportController@register');
 
