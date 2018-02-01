@@ -7,6 +7,7 @@ services:
             - MYSQL_ROOT_PASSWORD=root
         volumes:
             - /home/root/data/mysql:/var/lib/mysql
+
     rabbitmq:
         image: abdev/php-sec_rabbitmq
         privileged: true
@@ -14,7 +15,7 @@ services:
             - /home/root/data/rabbitmq:/var/lib/rabbitmq
 
     app-php-fpm:
-        image: abdev/php-sec_code2
+        image: abdev/php-sec_code
         labels:
             io.rancher.container.pull_image: always
 
@@ -34,8 +35,9 @@ services:
         links:
             - mysql
             - rabbitmq
+
     app-nginx:
-        image: abdev/php-sec_code2
+        image: abdev/php-sec_code
         labels:
             io.rancher.container.pull_image: always
 
@@ -61,5 +63,4 @@ services:
         depends_on:
             - nginx
         links:
-            # Target services in the same stack will be listed as a link
-            - nginx:nginx
+            - nginx
