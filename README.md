@@ -45,12 +45,19 @@ Plusieurs projets peuvent être demandés à être analyser. Lorsqu'un projet es
     php artisan migrate:install
     ``` 
 
-8. Enjoy ! :)
+8. Pour la gestion de l'authentification (avec Passport), faire un :
+    ```
+    php artisan passport:install
+    ```
+
+9. Enjoy ! :)
 
 
 ## Utilisation API
 
 Afin d'utiliser l'API, un token est requis.
+
+Pour ne pas utiliser l'authentification, passer la variable d'environnement 'ACTIVE_AUTH_TOKEN' à false dans le fichier .env
 
 [Voir ici](./docs/API_Usage.md)
 

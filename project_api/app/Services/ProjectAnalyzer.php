@@ -47,6 +47,9 @@ class ProjectAnalyzer
                 $classes
             );
 
+            $project->updated_at = new \DateTime();
+            $project->save();
+
             foreach ($classes as $class) {
                 $class->formatOutput();
 
@@ -62,7 +65,8 @@ class ProjectAnalyzer
                 $log->project_id = $project->id;
                 $log->title = $class::getName();
                 $log->log_type_id = $logType->id;
-                $log->status = $class->isSuccess();
+                $log->status = $class->success();
+                $log->final_output = $class->finalOutput();
                 $log->save();
 
                 foreach ($class->getLines() as $line) {
