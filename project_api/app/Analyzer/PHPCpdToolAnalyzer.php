@@ -43,9 +43,23 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
      */
     protected function formatLine(string $line): string
     {
-        $line_without_tab = str_replace("\r", '', $line);
-        if(preg_match('/^Time:\s\d+(?:\.\d+)?\s\w+,\sMemory:\s\d+(?:\.\d+)?\w+$/', $line_without_tab)){
-            $this->isSuccess = true;
+        $line_without_tab = trim(str_replace("\r", '', $line));
+        if($this->success == "ERROR"){
+            if (preg_match('/^\s+/', $line_without_tab) || preg_match('/^\.+/', $line_without_tab) || $line_without_tab == ""){
+                $line_without_tab = "";
+            }else {
+                if (preg_match('/^(\d+.\d+%)\s+duplicated lines out of (\d+)\s+total lines of code./', $line_without_tab, $matches)) {
+                    if ($matches[1] == '0.00%') {
+                        $this->success = "SUCCESS";
+                        $this->final_output = " Aucun doublon n'a été trouvé dans le projet.";
+                    } else {
+                        $this->success = "WARNING";
+                        $this->final_output = $matches[1] . " lignes dupliqués ont été trouvées, sur un total de " . $matches[2] . " lignes.";
+                    }
+                } else {
+                    $this->final_output = "Erreur lors de l'exécution de l'outil " . $this->getName();
+                }
+            }
         }
         return $line_without_tab;
     }
@@ -57,6 +71,6 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
 
     public static function getType(): string
     {
-        return 'stats';
+        return 'WARNING';
     }
 }

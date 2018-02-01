@@ -29,7 +29,6 @@ class CreateLogsTable extends Migration
             $table->increments('id');
             $table->text('content');
             $table->integer('log_id')->unsigned()->nullable();
-            $table->timestamps();
         });
 
         Schema::table('logs', function(Blueprint $table)

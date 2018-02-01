@@ -8,9 +8,12 @@
 
 namespace App\Analyzer;
 
-
 class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
 {
+
+    private $prec_line = '';
+    private $nb_depreciations_founded = 0;
+
     /**
      * You need to follow this structure
      *
@@ -31,7 +34,7 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
                 'require',
                 'wapmorgan/php-code-fixer',
             ],
-            '/root/.composer/vendor/bin/phpcs' => [
+            '/root/.composer/vendor/bin/phpcf' => [
                 'project',
             ],
         ];
@@ -43,23 +46,45 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
      */
     protected function formatLine(string $line): string
     {
-        $line_without_tab = str_replace("\r", '', $line);
-        if($line_without_tab == "No syntax error found"){
-            $this->isSuccess = true;
+        $line_without_tab = trim(str_replace("\r", '', $line));
+        if($this->success == "ERROR") {
+            if (preg_match('/^\s+/', $line_without_tab) || preg_match('/^\.+/', $line_without_tab) || $line_without_tab == ""){
+                $line_without_tab = "";
+            }else {
+                if (preg_match('/PHP\s+\|\s+Type\s+\|\s+File:Line\s+\|\s+Issue/', $this->prec_line) && preg_match('/^Peak memory usage:/', $line_without_tab)) {
+                    $this->success = "SUCCESS";
+                    $this->final_output = "Aucune dépréciation n'a été trouvé dans le projet.";
+                } else if (preg_match('/PHP\s+\|\s+Type\s+\|\s+File:Line\s+\|\s+Issue/', $this->prec_line) || $this->nb_depreciations_founded > 0) {
+                    $this->nb_depreciations_founded++;;
+                } else if (preg_match('/^Peak memory usage:/', $line_without_tab)) {
+                    $this->success = "WARNING";
+                    if ($this->nb_depreciations_founded > 1) {
+                        $this->final_output = $this->nb_depreciations_founded . " dépréciations ont été trouvées dans le projet.";
+                    } else {
+                        $this->final_output = $this->nb_depreciations_founded . " dépréciation a été trouvée dans le projet.";
+                    }
+                } else {
+                    $this->final_output = "Erreur lors de l'exécution de l'outil " . $this->getName();
+                }
+            }
         }
-        if($line_without_tab == "Scanning project ..."){
-            $line_without_tab = "";
-        }
+        $this->prec_line = $line_without_tab;
         return $line_without_tab;
     }
 
+    /**
+     * @return string
+     */
     public static function getName(): string
     {
         return 'PHPCodeFixer';
     }
 
+    /**
+     * @return string
+     */
     public static function getType(): string
     {
-        return 'stats';
+        return 'WARNING';
     }
 }
