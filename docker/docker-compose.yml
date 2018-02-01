@@ -35,7 +35,6 @@ services:
         - "dockerhost:${DOCKER_HOST_IP}"
       depends_on:
         - mysql
-        - rabbitmq
       environment:
         - APP_DOCKER_SOCKET_HOST=${APP_DOCKER_SOCKET_HOST}
       networks:
@@ -67,6 +66,8 @@ services:
         - "${RABBITMQ_MANAGEMENT_HTTP_HOST_PORT}:15672"
         - "${RABBITMQ_MANAGEMENT_HTTPS_HOST_PORT}:15671"
       privileged: true
+      depends_on:
+        - php-fpm
       environment:
         - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
         - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}

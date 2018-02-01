@@ -3,7 +3,7 @@
 YELLOW='\033[0;93m'
 GREEN='\033[0;32m'
 NC='\033[0m'
-DEFINED_CONTAINERS=("mysql" "php-fpm" "rabbitmq" "nginx")
+DEFINED_CONTAINERS=("mysql" "php-fpm" "rabbitmq" "nginx" "php-analyzer")
 REPOSITORY_BASE="abdev/php-sec_"
 
 build()
