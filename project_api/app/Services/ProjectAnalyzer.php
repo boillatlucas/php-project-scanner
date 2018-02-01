@@ -27,6 +27,7 @@ class ProjectAnalyzer
     {
 
         \Amqp::consume('analyze', function ($message, $resolver) {
+            $resolver->acknowledge($message);
 
             $project = Project::where('slug', '=', $message->body)->first();
 
@@ -88,7 +89,6 @@ class ProjectAnalyzer
                 return $e->getMessage();
             }
 
-            $resolver->acknowledge($message);
             $resolver->stopWhenProcessed();
         });
 

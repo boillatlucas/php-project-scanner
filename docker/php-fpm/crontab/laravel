@@ -1,0 +1,1 @@
+*\1 * * * * root /usr/local/bin/php /var/www/artisan project:analyze >> /var/log/cron.laravel.log 2>&1

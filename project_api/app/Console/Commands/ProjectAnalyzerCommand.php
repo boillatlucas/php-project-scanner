@@ -28,11 +28,7 @@ class ProjectAnalyzerCommand extends Command
      */
     public function handle()
     {
-        try {
-            ProjectAnalyzer::analyze();
-        } catch (\Exception $e) {
-            return $e->getCode();
-        }
+        ProjectAnalyzer::analyze();
 
         return 0;
     }
