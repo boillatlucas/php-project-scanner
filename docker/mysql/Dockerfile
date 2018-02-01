@@ -1,11 +1,4 @@
-ARG MYSQL_VERSION=8.0
-FROM mysql:${MYSQL_VERSION}
-
-MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
-
-#####################################
-# Set Timezone
-#####################################
+FROM mysql:5.7
 
 ARG TZ=UTC
 ENV TZ ${TZ}

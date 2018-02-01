@@ -1,1 +1,0 @@
-*\1 * * * * root php /var/www/artisan project:analyze >> /dev/null 2>&1

@@ -21,6 +21,7 @@ class ProjectAnalyzer
     public static function analyze()
     {
         \Amqp::consume('analyze', function ($message, $resolver) {
+            $resolver->acknowledge($message);
             $project = Project::where('slug', '=', $message->body)->first();
 
             if ($project === null) {
@@ -66,7 +67,6 @@ class ProjectAnalyzer
             $project->save();
 
 
-            $resolver->acknowledge($message);
             $resolver->stopWhenProcessed();
         });
     }
