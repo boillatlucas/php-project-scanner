@@ -11,19 +11,6 @@
 |
 */
 
-Route::get('/project/analyze/{slug}', [
-    'as' => 'project_analyze', 'uses' => 'AnalyzerController@analyze'
-]);
-
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/project/', function (){
-    return response()->json(array('return_code'=>"FAILED", 'error'=>"Missing slug parameter."));
-});
-
-Route::get('/project/{slug}', 'ProjectController@getLogs')->name('project_get_log');
-
-Route::post('/project', 'AnalyzerController@request')->name('project_request');
-

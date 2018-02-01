@@ -46,7 +46,9 @@ abstract class BaseAnalyzer implements AnalyzerToolInterface
     public function formatOutput()
     {
         foreach (explode(PHP_EOL, $this->output) as $line) {
-            $this->lines[] = $this->formatLine($line);
+            if($this->formatLine($line) != ""){
+                $this->lines[] = $this->formatLine($line);
+            }
         }
 
         return $this;
