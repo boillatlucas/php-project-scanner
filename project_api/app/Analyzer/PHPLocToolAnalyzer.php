@@ -43,20 +43,35 @@ class PHPLocToolAnalyzer extends BaseAnalyzer
      */
     protected function formatLine(string $line): string
     {
-        $line_without_tab = str_replace("\r", '', $line);
-        if(preg_match('/Class Constants/', $line_without_tab)){
-            $this->isSuccess = true;
+        $line_without_tab = trim(str_replace("\r", '', $line));
+        if($this->success == "ERROR") {
+            if (preg_match('/^\s+/', $line_without_tab) || preg_match('/^\.+/', $line_without_tab) || $line_without_tab == "") {
+                $line_without_tab = "";
+            } else {
+                if (preg_match('/Class Constants/', $line_without_tab)) {
+                    $this->success = "STATS";
+                    $this->final_output = "Statistiques sur les fichiers de votre projet";
+                } else {
+                    $this->final_output = "Erreur lors de l'exécution de l'outil " . $this->getName();
+                }
+            }
         }
         return $line_without_tab;
     }
 
+    /**
+     * @return string
+     */
     public static function getName(): string
     {
-        return 'PHPCPD';
+        return 'PHPLOC';
     }
 
+    /**
+     * @return string
+     */
     public static function getType(): string
     {
-        return 'stats';
+        return 'STATS';
     }
 }

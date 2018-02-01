@@ -22,9 +22,14 @@ abstract class BaseAnalyzer implements AnalyzerToolInterface
     protected $lines = [];
 
     /**
-     * @var bool
+     * @var string
      */
-    protected $isSuccess = false;
+    protected $success = "ERROR";
+
+    /**
+     * @var string
+     */
+    protected $final_output = "";
 
     /**
      * You need to follow this structure
@@ -84,10 +89,20 @@ abstract class BaseAnalyzer implements AnalyzerToolInterface
     /**
      * Return if command is success or not
      *
-     * @return bool
+     * @return string
      */
-    public function isSuccess(): bool
+    public function success(): string
     {
-        return $this->isSuccess;
+        return $this->success;
+    }
+
+    /**
+     * Return final output of the log
+     *
+     * @return string
+     */
+    public function finalOutput(): string
+    {
+        return $this->final_output;
     }
 }

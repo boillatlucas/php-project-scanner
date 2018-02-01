@@ -107,146 +107,121 @@
         "return_code": "OK",
         "count_result": 4,
         "return": {
-            "id": 24,
-            "slug": "5b003a7a1965a79996581b10a19fa1fb5a7035649923a",
-            "email": "d.sandron@it-akademy.fr",
-            "repository_url": "https://github.com/dimsand/TP_E-Commerce.git",
-            "analyzed": "2018-01-30 09:09:19",
-            "created_at": "2018-01-30 09:05:40",
-            "updated_at": "2018-01-30 09:09:19",
-            "logs": [
-                {
-                    "id": 85,
-                    "title": "PHPCodeFixer",
-                    "status": "0",
-                    "project_id": 24,
-                    "log_type_id": 1,
-                    "created_at": "2018-01-30 09:09:15",
-                    "updated_at": "2018-01-30 09:09:15",
-                    "logs_lines": [
+            "project": {
+                "id": 22,
+                "slug": "b145f4450877e2701b64bb80745904ce5a72ed65518db",
+                "email": "d.sandron@it-akademy.fr",
+                "repository_url": "https://github.com/ThomasLaporte/PEPSI2.git",
+                "analyzed": "2018-02-01 10:36:51",
+                "created_at": "2018-02-01 10:35:17",
+                "updated_at": "2018-02-01 10:36:51",
+                "user_id": 1,
+                "logs": {
+                    "SUCCESS": [
                         {
-                            "id": 1345,
-                            "content": "OCI runtime exec failed: exec failed: container_linux.go:296: starting container process caused \"exec: \\\"/root/.composer/vendor/bin/phpcs\\\": stat /root/.composer/vendor/bin/phpcs: no such file or directory\": unknown",
-                            "log_id": 85,
-                            "created_at": null,
-                            "updated_at": null
+                            "count": 3,
+                            "name": "PHPCPD",
+                            "final_output": "PHPCPD n'a pas trouvé de doublons dans le projet.",
+                            "logs_lines": [
+                                {
+                                    "id": 1543,
+                                    "content": "phpcpd 3.0.1 by Sebastian Bergmann.",
+                                    "log_id": 138,
+                                    "created_at": null,
+                                    "updated_at": null
+                                },
+                                {
+                                    "id": 1544,
+                                    "content": "0.00% duplicated lines out of 2136 total lines of code.",
+                                    "log_id": 138,
+                                    "created_at": null,
+                                    "updated_at": null
+                                },
+                                {
+                                    "id": 1545,
+                                    "content": "Time: 17 ms, Memory: 4.00MB",
+                                    "log_id": 138,
+                                    "created_at": null,
+                                    "updated_at": null
+                                }
+                            ]
+                        },
+                        {
+                            "count": 3,
+                            "name": "PHP Parallel Lint",
+                            "final_output": "PHP Parallel Lint n'a pas trouvé d'erreurs de syntax dans le projet.",
+                            "logs_lines": [
+                                {
+                                    "id": 1483,
+                                    "content": "PHP 7.1.12 | 10 parallel jobs",
+                                    "log_id": 136,
+                                    "created_at": null,
+                                    "updated_at": null
+                                },
+                                {
+                                    "id": 1484,
+                                    "content": "Checked 39 files in 0.1 seconds",
+                                    "log_id": 136,
+                                    "created_at": null,
+                                    "updated_at": null
+                                },
+                                {
+                                    "id": 1485,
+                                    "content": "No syntax error found",
+                                    "log_id": 136,
+                                    "created_at": null,
+                                    "updated_at": null
+                                }
+                            ]
                         }
                     ],
-                    "log_type": {
-                        "id": 1,
-                        "type": "stats"
-                    }
-                },
-                {
-                    "id": 86,
-                    "title": "PHPCPD",
-                    "status": "1",
-                    "project_id": 24,
-                    "log_type_id": 2,
-                    "created_at": "2018-01-30 09:09:15",
-                    "updated_at": "2018-01-30 09:09:15",
-                    "logs_lines": [
+                    "STATS": [
                         {
-                            "id": 1346,
-                            "content": "PHP 7.1.12 | 10 parallel jobs",
-                            "log_id": 86,
-                            "created_at": null,
-                            "updated_at": null
-                        },
-                        {
-                            "id": 1347,
-                            "content": "Checked 11 files in 0 seconds",
-                            "log_id": 86,
-                            "created_at": null,
-                            "updated_at": null
-                        },
-                        {
-                            "id": 1348,
-                            "content": "No syntax error found",
-                            "log_id": 86,
-                            "created_at": null,
-                            "updated_at": null
+                            "count": 57,
+                            "name": "PHPLOC",
+                            "final_output": "Statistiques sur les fichiers de votre projet (via l'outil PHPLOC)",
+                            "logs_lines": [
+                                {
+                                    "id": 1486,
+                                    "content": "phploc 4.0.1 by Sebastian Bergmann.",
+                                    "log_id": 137,
+                                    "created_at": null,
+                                    "updated_at": null
+                                },
+                                {
+                                    "id": 1487,
+                                    "content": "Directories                                          8",
+                                    "log_id": 137,
+                                    "created_at": null,
+                                    "updated_at": null
+                                },
+                                {
+                                    "id": 1488,
+                                    "content": "Files                                               39",
+                                    "log_id": 137,
+                                    "created_at": null,
+                                    "updated_at": null
+                                },
+                                {
+                                    "id": 1489,
+                                    "content": "Size",
+                                    "log_id": 137,
+                                    "created_at": null,
+                                    "updated_at": null
+                                },
+                                {
+                                    "id": 1490,
+                                    "content": "Lines of Code (LOC)                             2136",
+                                    "log_id": 137,
+                                    "created_at": null,
+                                    "updated_at": null
+                                }
+                                ...
+                            ]
                         }
-                    ],
-                    "log_type": {
-                        "id": 2,
-                        "type": "syntax"
-                    }
-                },
-                {
-                    "id": 87,
-                    "title": "PHPCPD",
-                    "status": "1",
-                    "project_id": 24,
-                    "log_type_id": 1,
-                    "created_at": "2018-01-30 09:09:15",
-                    "updated_at": "2018-01-30 09:09:15",
-                    "logs_lines": [
-                        {
-                            "id": 1349,
-                            "content": "phploc 4.0.1 by Sebastian Bergmann.",
-                            "log_id": 87,
-                            "created_at": null,
-                            "updated_at": null
-                        },
-                        {
-                            "id": 1350,
-                            "content": "Directories                                          1",
-                            "log_id": 87,
-                            "created_at": null,
-                            "updated_at": null
-                        },
-                        {
-                            "id": 1351,
-                            "content": "Files                                               11",
-                            "log_id": 87,
-                            "created_at": null,
-                            "updated_at": null
-                        },
-                        ...
-                    ],
-                    "log_type": {
-                        "id": 1,
-                        "type": "stats"
-                    }
-                },
-                {
-                    "id": 88,
-                    "title": "PHPCPD",
-                    "status": "1",
-                    "project_id": 24,
-                    "log_type_id": 1,
-                    "created_at": "2018-01-30 09:09:19",
-                    "updated_at": "2018-01-30 09:09:19",
-                    "logs_lines": [
-                        {
-                            "id": 1406,
-                            "content": "phpcpd 3.0.1 by Sebastian Bergmann.",
-                            "log_id": 88,
-                            "created_at": null,
-                            "updated_at": null
-                        },
-                        {
-                            "id": 1407,
-                            "content": "0.00% duplicated lines out of 537 total lines of code.",
-                            "log_id": 88,
-                            "created_at": null,
-                            "updated_at": null
-                        },
-                        {
-                            "id": 1408,
-                            "content": "Time: 11 ms, Memory: 4.00MB",
-                            "log_id": 88,
-                            "created_at": null,
-                            "updated_at": null
-                        }
-                    ],
-                    "log_type": {
-                        "id": 1,
-                        "type": "stats"
-                    }
+                    ]
                 }
-            ]
+            }
         }
     }
   ```

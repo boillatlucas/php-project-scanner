@@ -42,7 +42,14 @@ interface AnalyzerToolInterface
     /**
      * Return if command is success or not
      *
-     * @return bool
+     * @return string
      */
-    public function isSuccess(): bool;
+    public function success(): string;
+
+    /**
+     * Return final output of the log
+     *
+     * @return string
+     */
+    public function finalOutput(): string;
 }
