@@ -7,7 +7,7 @@ ARG USER_PNAME=app
 RUN apt-get update
 
 # Install libraries, utils
-RUN apt-get install -y librabbitmq-dev zlib1g-dev libicu-dev g++ cron wget zlibc
+RUN apt-get install -y librabbitmq-dev zlib1g-dev libicu-dev g++ cron wget zlibc libsodium-dev libgmp-dev
 
 # Install amqp to use queue system like RabbitMQ
 RUN pecl install amqp
@@ -43,7 +43,10 @@ RUN /tmp/composer-install.sh && \
 # Fix permission
 RUN chown -R $USER_PNAME:www-data /var/www
 
-CMD cron && php-fpm
+CMD cron && \
+    php /var/www/artisan migrate && \
+    php /var/www/artisan passport:install && \
+    php-fpm
 
 WORKDIR /var/www
 
