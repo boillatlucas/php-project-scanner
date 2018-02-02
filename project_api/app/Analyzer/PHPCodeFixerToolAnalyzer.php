@@ -47,17 +47,17 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
     protected function formatLine(string $line): string
     {
         $line_without_tab = trim(str_replace("\r", '', $line));
-        if($this->success == "ERROR") {
+        if($this->success == self::STATUS_ERROR) {
             if (preg_match('/^\s+/', $line_without_tab) || preg_match('/^\.+/', $line_without_tab) || $line_without_tab == ""){
                 $line_without_tab = "";
             }else {
                 if (preg_match('/PHP\s+\|\s+Type\s+\|\s+File:Line\s+\|\s+Issue/', $this->prec_line) && preg_match('/^Peak memory usage:/', $line_without_tab)) {
-                    $this->success = "SUCCESS";
+                    $this->success = self::STATUS_SUCCESS;
                     $this->final_output = "Aucune dépréciation n'a été trouvé dans le projet.";
-                } else if (preg_match('/PHP\s+\|\s+Type\s+\|\s+File:Line\s+\|\s+Issue/', $this->prec_line) || $this->nb_depreciations_founded > 0) {
+                } else if (preg_match('/PHP\s+\|\s+Type\s+\|\s+File:Line\s+\|\s+Issue/', $this->prec_line) || ($this->nb_depreciations_founded > 0 && !preg_match('/^Peak memory usage:/', $line_without_tab))) {
                     $this->nb_depreciations_founded++;;
                 } else if (preg_match('/^Peak memory usage:/', $line_without_tab)) {
-                    $this->success = "WARNING";
+                    $this->success = self::STATUS_WARNING;
                     if ($this->nb_depreciations_founded > 1) {
                         $this->final_output = $this->nb_depreciations_founded . " dépréciations ont été trouvées dans le projet.";
                     } else {

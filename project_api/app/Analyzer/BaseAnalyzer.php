@@ -11,6 +11,12 @@ namespace App\Analyzer;
 
 abstract class BaseAnalyzer implements AnalyzerToolInterface
 {
+
+    const STATUS_SUCCESS = "SUCCESS";
+    const STATUS_ERROR = "ERROR";
+    const STATUS_WARNING = "WARNING";
+    const STATUS_STATS = "STATS";
+
     /**
      * @var string|null
      */
