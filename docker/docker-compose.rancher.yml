@@ -1,0 +1,76 @@
+version: '2'
+services:
+    mysql:
+        image: abdev/php-sec_mysql
+        environment:
+            - MYSQL_DATABASE=homestead
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - /home/root/data/mysql:/var/lib/mysql
+
+    rabbitmq:
+        image: abdev/php-sec_rabbitmq
+        privileged: true
+        volumes:
+            - /home/root/data/rabbitmq:/var/lib/rabbitmq
+
+    app-php-fpm:
+        image: abdev/php-sec_code
+        labels:
+            io.rancher.container.pull_image: always
+
+    php-fpm:
+        image: abdev/php-sec_php-fpm
+        labels:
+            io.rancher.sidekicks: app-php-fpm
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        volumes_from:
+            - app-php-fpm
+        stdin_open: true
+        tty: true
+        depends_on:
+            - mysql
+            - rabbitmq
+        links:
+            - mysql
+            - rabbitmq
+
+    app-nginx:
+        image: abdev/php-sec_code
+        labels:
+            io.rancher.container.pull_image: always
+
+    nginx:
+        image: abdev/php-sec_nginx
+        labels:
+            io.rancher.sidekicks: app-nginx
+        volumes_from:
+            - app-nginx
+        depends_on:
+            - php-fpm
+        links:
+            - php-fpm
+
+    # Workaround for app, docker API can't pull image without build
+    # Declare php-analyzer as a service with restart policy set to no do the thing
+    php-analyzer:
+        image: abdev/php-sec_php-analyzer
+        labels:
+            io.rancher.container.pull_image: always
+        restart: 'no'
+        tty: true
+        stdin_open: true
+
+    lb:
+        image: rancher/load-balancer-service
+        ports:
+            # Assign a random public port and direct traffic to private port 80 of the service.
+            # - 80
+            # Listen on public port 80 and direct traffic to private port 80 of the service
+            - 80:80
+            - 443:443
+        depends_on:
+            - nginx
+        links:
+            - nginx
