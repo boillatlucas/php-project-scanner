@@ -68,7 +68,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    API PHP Scanner
+                    {{ env('APP_NAME') }}
                 </div>
 
                 <div class="links">

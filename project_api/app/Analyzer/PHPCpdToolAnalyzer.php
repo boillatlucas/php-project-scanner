@@ -44,16 +44,16 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
     protected function formatLine(string $line): string
     {
         $line_without_tab = trim(str_replace("\r", '', $line));
-        if($this->success == "ERROR"){
+        if($this->success == self::STATUS_ERROR){
             if (preg_match('/^\s+/', $line_without_tab) || preg_match('/^\.+/', $line_without_tab) || $line_without_tab == ""){
                 $line_without_tab = "";
             }else {
                 if (preg_match('/^(\d+.\d+%)\s+duplicated lines out of (\d+)\s+total lines of code./', $line_without_tab, $matches)) {
                     if ($matches[1] == '0.00%') {
-                        $this->success = "SUCCESS";
+                        $this->success = self::STATUS_SUCCESS;
                         $this->final_output = " Aucun doublon n'a été trouvé dans le projet.";
                     } else {
-                        $this->success = "WARNING";
+                        $this->success = self::STATUS_WARNING;
                         $this->final_output = $matches[1] . " lignes dupliqués ont été trouvées, sur un total de " . $matches[2] . " lignes.";
                     }
                 } else {

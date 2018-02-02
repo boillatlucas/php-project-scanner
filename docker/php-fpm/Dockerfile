@@ -13,8 +13,8 @@ RUN apt-get install -y librabbitmq-dev zlib1g-dev libicu-dev g++ cron wget zlibc
 RUN pecl install amqp
 
 # Install php extensions
-RUN docker-php-ext-install -j$(nproc) zip bcmath pdo_mysql intl gmp sodium && \
-    docker-php-ext-enable zip bcmath pdo_mysql amqp intl gmp sodium
+RUN docker-php-ext-install -j$(nproc) zip bcmath pdo_mysql intl && \
+    docker-php-ext-enable zip bcmath pdo_mysql amqp intl
 
 COPY ./laravel.ini /usr/local/etc/php/conf.d
 

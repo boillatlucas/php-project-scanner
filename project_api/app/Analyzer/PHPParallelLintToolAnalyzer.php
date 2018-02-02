@@ -43,15 +43,15 @@ class PHPParallelLintToolAnalyzer extends BaseAnalyzer
     protected function formatLine(string $line): string
     {
         $line_without_tab = trim(str_replace("\r", '', $line));
-        if($this->success == "ERROR") {
+        if($this->success == self::STATUS_ERROR) {
             if (preg_match('/^\s+/', $line_without_tab) || preg_match('/^\.+/', $line_without_tab) || $line_without_tab == "") {
                 $line_without_tab = "";
             } else {
                 if (preg_match("/^Syntax error found in (\d+) file$/", $line_without_tab, $matches)) {
-                    $this->success = "ERROR";
+                    $this->success = self::STATUS_ERROR;
                     $this->final_output = "Des erreurs de syntax ont été trouvés dans " . $matches[1] . " fichier(s).";
                 } else if (preg_match("/^No syntax error found$/", $line_without_tab)) {
-                    $this->success = "SUCCESS";
+                    $this->success = self::STATUS_SUCCESS;
                     $this->final_output = "Aucunes erreurs de syntax ont été trouvées dans le projet.";
                 } else {
                     $this->final_output = "Erreur lors de l'exécution de l'outil " . $this->getName();

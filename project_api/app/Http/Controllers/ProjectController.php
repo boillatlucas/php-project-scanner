@@ -20,12 +20,16 @@ class ProjectController extends Controller
        $return_logs['project'] = $project_logs->toArray();
        unset($return_logs['project']['logs']);
        $return_logs['project']['logs'] = array();
+       $i = array();
        foreach ($project_logs->logs as $key => $pl){
-           if(!isset($return_logs['project']['logs'][$pl->status][$key]['count'])){ $return_logs['project']['logs'][$pl->status][$key]['count'] = 0; };
-           $return_logs['project']['logs'][$pl->status][$key]['count'] = count($pl->logs_lines->toArray());
-           $return_logs['project']['logs'][$pl->status][$key]['name'] = $pl->title;
-           $return_logs['project']['logs'][$pl->status][$key]['final_output'] = $pl->final_output;
-           $return_logs['project']['logs'][$pl->status][$key]['logs_lines'] = $pl->logs_lines->toArray();
+           if(empty($i[$pl->status])){ $i[$pl->status] = 0; }
+           $iti = $i[$pl->status];
+           if(!isset($return_logs['project']['logs'][$pl->status][$iti]['count'])){ $return_logs['project']['logs'][$pl->status][$iti]['count'] = 0; }
+           $return_logs['project']['logs'][$pl->status][$iti]['count'] = count($pl->logs_lines->toArray());
+           $return_logs['project']['logs'][$pl->status][$iti]['name'] = $pl->title;
+           $return_logs['project']['logs'][$pl->status][$iti]['final_output'] = $pl->final_output;
+           $return_logs['project']['logs'][$pl->status][$iti]['logs_lines'] = $pl->logs_lines->toArray();
+           $i[$pl->status]++;
        }
        return response()->json(array('return_code'=>'OK', 'count_result'=>count($project_logs->logs), 'return'=>$return_logs));
    }
