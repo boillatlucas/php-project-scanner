@@ -52,6 +52,16 @@ services:
         links:
             - php-fpm
 
+    # Workaround for app, docker API can't pull image without build
+    # Declare php-analyzer as a service with restart policy set to no do the thing
+    php-analyzer:
+        image: abdev/php-sec_php-analyzer
+        labels:
+            io.rancher.container.pull_image: always
+        restart: 'no'
+        tty: true
+        stdin_open: true
+
     lb:
         image: rancher/load-balancer-service
         ports:
