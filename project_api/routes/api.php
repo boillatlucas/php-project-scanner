@@ -18,6 +18,7 @@ Route::get('login', function (){
 })->name('login');
 Route::post('login', 'API\PassportController@login');
 Route::post('register', 'API\PassportController@register');
+Route::post('contact', 'ContactController@sendMail')->name('contact_send_mail');
 
 if(env('ACTIVE_AUTH_TOKEN')){
     Route::group(['middleware' => 'auth:api'], function(){
@@ -29,7 +30,7 @@ if(env('ACTIVE_AUTH_TOKEN')){
         });
         Route::get('project/{slug}', 'ProjectController@getLogs')->name('project_get_log');
         Route::get('user-projects/{analyzed?}', 'ProjectController@getProjectsUserConnected')->name('user_get_projects');
-        Route::post('logout','API\PassportController@logoutApi');
+        Route::post('logout','API\Passp');
     });
 }else{
     Route::post('project', 'AnalyzerController@request')->name('project_request');
