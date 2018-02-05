@@ -41,7 +41,7 @@ class ContactController extends Controller
         }
         Mail::to(env('EMAIL_CONTACT'), env('EMAIL_CONTACT'))->send(new Contact($request->except('_token')));
 
-        return response()->json(array('return_code'=>'OK', 'return'=>"Email envoyé à l'adresse mail ".env('EMAIL_CONTACT')));
+        return response()->json(array('return_code'=>'OK', 'return'=>"Email envoyé avec succès"));
     }
 
 }

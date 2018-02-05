@@ -226,8 +226,11 @@
     }
   ```
   
-- **[GET]** http://localhost:8888/api/user-projects/{analyzed?} _(retourne les projets de l'utilisateur connecté, filtre possible : déjà analysés ou non)_
-  - analyzed _(facultatif)_ : vide par défaut = tous les projets | 'analyzed' = projets déjà analysés | 'not-analyzed' = projets pas encore analysés 
+- **[GET]** http://localhost:8888/api/contact _(gestion du formulaire de contact)_
+  - fullname : nom complet de l'émetteur du mail
+  - email : email de l'émetteur du mail
+  - sujet : sujet du mail
+  - message : contenu du mail 
   ```
     {
         "return_code": "OK",
@@ -255,4 +258,13 @@
             }
         ]
     }
+  ```
+  
+- **[POST]** http://localhost:8888/api/logout _(déconnecte l'utilisateur en cours)_
+- /!\ Bien pensez aux headers 'Accept' et 'Authorization'
+  ```
+  {
+      "return_code": "OK",
+      "return": "Email envoyé avec succès"
+  }
   ```
