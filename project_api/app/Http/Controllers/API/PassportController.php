@@ -92,15 +92,4 @@ class PassportController extends Controller
         return response()->json(['success' => $user], $this->successStatus);
     }
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'c_password.required' => 'The confirm password is required',
-        ];
-    }
 }
