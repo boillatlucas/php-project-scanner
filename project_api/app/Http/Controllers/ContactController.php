@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -35,11 +36,12 @@ class ContactController extends Controller
             return response()->json(array('return_code'=>'FAILED', 'return'=>$errors));
         }
 
-        Mail::raw($message_body, function ($message) use ($email, $fullname, $sujet){
-            $message->to($email, $fullname)->subject($sujet);
-        });
+        if(empty(env('EMAIL_CONTACT'))){
+            return response()->json(array('return_code'=>'FAILED', 'return'=>"Aucun email de contact renseigné."));
+        }
+        Mail::to(env('EMAIL_CONTACT'), env('EMAIL_CONTACT'))->send(new Contact($request->except('_token')));
 
-        return response()->json(array('return_code'=>'OK', 'return'=>"Email envoyé à l'adresse mail ".$email));
+        return response()->json(array('return_code'=>'OK', 'return'=>"Email envoyé à l'adresse mail ".env('EMAIL_CONTACT')));
     }
 
 }
