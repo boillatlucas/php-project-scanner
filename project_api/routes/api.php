@@ -30,7 +30,7 @@ if(env('ACTIVE_AUTH_TOKEN')){
         });
         Route::get('project/{slug}', 'ProjectController@getLogs')->name('project_get_log');
         Route::get('user-projects/{analyzed?}', 'ProjectController@getProjectsUserConnected')->name('user_get_projects');
-        Route::post('logout','API\Passp');
+        Route::post('logout','API\PassportController@logoutApi');
     });
 }else{
     Route::post('project', 'AnalyzerController@request')->name('project_request');

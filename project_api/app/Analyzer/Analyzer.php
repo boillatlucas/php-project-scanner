@@ -71,6 +71,7 @@ class Analyzer
         $this->executeCommand([
             'git',
             'clone',
+            '--depth=1',
             $repository,
             'project',
         ]);
