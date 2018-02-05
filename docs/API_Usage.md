@@ -228,6 +228,37 @@
     }
   ```
   
+  - **[GET]** http://localhost:8888/api/user-projects/{analyzed?} _(retourne les projets de l'utilisateur connecté, filtre possible : déjà analysés ou non)_
+    - analyzed _(facultatif)_ : vide par défaut = tous les projets | 'analyzed' = projets déjà analysés | 'not-analyzed' = projets pas encore analysés 
+    ```
+      {
+          "return_code": "OK",
+          "count_result": 2,
+          "return": [
+              {
+                  "id": 13,
+                  "slug": "5b003a7a1965a79996581b10a19fa1fb5a6f2c57c17f6",
+                  "email": "d.sandron@it-akademy.fr",
+                  "repository_url": "https://github.com/dimsand/TP_E-Commerce.git",
+                  "analyzed": null,
+                  "created_at": "2018-01-29 14:14:47",
+                  "updated_at": "2018-01-29 14:14:47",
+                  "user_id": 1
+              },
+              {
+                  "id": 14,
+                  "slug": "5b003a7a1965a79996581b10a19fa1fb5a6f307f759e4",
+                  "email": "d.sandron@it-akademy.fr",
+                  "repository_url": "https://github.com/dimsand/TP_E-Commerce.git",
+                  "analyzed": null,
+                  "created_at": "2018-01-29 14:32:31",
+                  "updated_at": "2018-01-29 14:32:31",
+                  "user_id": 1
+              }
+          ]
+      }
+    ```
+  
 - **[POST]** http://localhost:8888/api/contact _(gestion du formulaire de contact)_
   - fullname : nom complet de l'émetteur du mail
   - email : email de l'émetteur du mail
