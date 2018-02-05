@@ -18,6 +18,7 @@ Route::get('login', function (){
 })->name('login');
 Route::post('login', 'API\PassportController@login');
 Route::post('register', 'API\PassportController@register');
+Route::post('contact', 'ContactController@sendMail')->name('contact_send_mail');
 
 if(env('ACTIVE_AUTH_TOKEN')){
     Route::group(['middleware' => 'auth:api'], function(){

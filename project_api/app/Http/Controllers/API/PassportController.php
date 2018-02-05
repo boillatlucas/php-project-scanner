@@ -24,9 +24,11 @@ class PassportController extends Controller
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
             $success['token'] = $user->createToken('MyApp')->accessToken;
+            $success['name'] = $user->name;
+            $success['url_projets_user'] = route('user_get_projects');
             return response()->json(['success' => $success], $this->successStatus);
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
 
@@ -43,6 +45,9 @@ class PassportController extends Controller
             'email' => 'required|email',
             'password' => 'required',
             'c_password' => 'required|same:password',
+        ],
+        [
+            'c_password.required' => 'The confirm password is required'
         ]);
 
         if ($validator->fails()) {
@@ -53,7 +58,7 @@ class PassportController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user_exist = User::where('email', $input['email'])->first();
         if($user_exist){
-            return response()->json(['error' => "Un user avec cet email existe déjà."], 401);
+            return response()->json(['error' => "An user already exist with this email."], 401);
         }
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
@@ -86,4 +91,5 @@ class PassportController extends Controller
         $user = Auth::user();
         return response()->json(['success' => $user], $this->successStatus);
     }
+
 }

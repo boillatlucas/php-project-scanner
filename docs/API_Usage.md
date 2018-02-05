@@ -58,7 +58,9 @@
   ```
   {
       "success": {
-          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjgxOGI5MGFmNjBiY2NmODZmYjllZTFiMjk0ZjY1YjZiNGY4ZGViMWI1YzAxOTM4NDk0MzI1NGYwYzlhMDg1NzVkNmRiMDk1ZGVmMGI2YmFjIn0.eyJhdWQiOiIzIiwianRpIjoiODE4YjkwYWY2MGJjY2Y4NmZiOWVlMWIyOTRmNjViNmI0ZjhkZWIxYjVjMDE5Mzg0OTQzMjU0ZjBjOWEwODU3NWQ2ZGIwOTVkZWYwYjZiYWMiLCJpYXQiOjE1MTczMDU4OTksIm5iZiI6MTUxNzMwNTg5OSwiZXhwIjoxNTQ4ODQxODk5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.XMMbWogThr-m07UxUOPvbhEvNVmtfkdrF_nv81phCFs-IucEydBogdReiUJjHHxeWzx_ZSAIq6ErJTF9PySK0cgVvWUwuB28CnmpsEjFBKAOY8zRw3saOaI-aR8jaS8ZrmSxkEt2YaiTEL-LCqeuGKEQamRBro5pxedOKsfD6xIGaD97LEw3KADFJpPLUtaUomgTOLyIyc0A5WQ3PjJgG-GhXHnu8_mRWmPGcbnZg71XnhmKlo-l3lBr7ZFCugZ-_BKNG_1iLmJshjkqtbMYV9AjLvwoiVPvECfjSPJHA_0vPQ1_IQT8C9y7ZRMYeg4JtuR3mtIxcVre15mEdTi5dAMKC0o419RqrNyQBq8G5yFZ3n28D0uGQ1KJ6axuxaKnJpgNH3y-Wp00EaNKlmBQEvLlXbSWenjdvZOCZqQY94UQKs-_VvlZ0QnVX1wp2DHgmDnk850O-CFsP7Pr63ZIqWwKElGr0ZTmnM_iBNAkrgNEZ99410NTYmWWcot2qyCxK_czkkQlmEbKqQxuSgl3NbEm79xo7mOfIo3AzBlmuHxBFvfgqFVLZcA0Hx8kPICZ-myzQIe8RsWKiJ4DWYPjQwXlqEdh3lKY98A31wp5QjtFF0KZUN2QTuAK8BvWwNxTX3ebAH9PzK40SuArv_l2CHw3-0I7wdhKK12Ku7ZnwOc"
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjgxOGI5MGFmNjBiY2NmODZmYjllZTFiMjk0ZjY1YjZiNGY4ZGViMWI1YzAxOTM4NDk0MzI1NGYwYzlhMDg1NzVkNmRiMDk1ZGVmMGI2YmFjIn0.eyJhdWQiOiIzIiwianRpIjoiODE4YjkwYWY2MGJjY2Y4NmZiOWVlMWIyOTRmNjViNmI0ZjhkZWIxYjVjMDE5Mzg0OTQzMjU0ZjBjOWEwODU3NWQ2ZGIwOTVkZWYwYjZiYWMiLCJpYXQiOjE1MTczMDU4OTksIm5iZiI6MTUxNzMwNTg5OSwiZXhwIjoxNTQ4ODQxODk5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.XMMbWogThr-m07UxUOPvbhEvNVmtfkdrF_nv81phCFs-IucEydBogdReiUJjHHxeWzx_ZSAIq6ErJTF9PySK0cgVvWUwuB28CnmpsEjFBKAOY8zRw3saOaI-aR8jaS8ZrmSxkEt2YaiTEL-LCqeuGKEQamRBro5pxedOKsfD6xIGaD97LEw3KADFJpPLUtaUomgTOLyIyc0A5WQ3PjJgG-GhXHnu8_mRWmPGcbnZg71XnhmKlo-l3lBr7ZFCugZ-_BKNG_1iLmJshjkqtbMYV9AjLvwoiVPvECfjSPJHA_0vPQ1_IQT8C9y7ZRMYeg4JtuR3mtIxcVre15mEdTi5dAMKC0o419RqrNyQBq8G5yFZ3n28D0uGQ1KJ6axuxaKnJpgNH3y-Wp00EaNKlmBQEvLlXbSWenjdvZOCZqQY94UQKs-_VvlZ0QnVX1wp2DHgmDnk850O-CFsP7Pr63ZIqWwKElGr0ZTmnM_iBNAkrgNEZ99410NTYmWWcot2qyCxK_czkkQlmEbKqQxuSgl3NbEm79xo7mOfIo3AzBlmuHxBFvfgqFVLZcA0Hx8kPICZ-myzQIe8RsWKiJ4DWYPjQwXlqEdh3lKY98A31wp5QjtFF0KZUN2QTuAK8BvWwNxTX3ebAH9PzK40SuArv_l2CHw3-0I7wdhKK12Ku7ZnwOc",
+          "name": "Test",
+          "url_projets_user": "http://localhost:8888/api/user-projects"
       }
   }
   ```
@@ -226,33 +228,45 @@
     }
   ```
   
-- **[GET]** http://localhost:8888/api/user-projects/{analyzed?} _(retourne les projets de l'utilisateur connecté, filtre possible : déjà analysés ou non)_
-  - analyzed _(facultatif)_ : vide par défaut = tous les projets | 'analyzed' = projets déjà analysés | 'not-analyzed' = projets pas encore analysés 
+  - **[GET]** http://localhost:8888/api/user-projects/{analyzed?} _(retourne les projets de l'utilisateur connecté, filtre possible : déjà analysés ou non)_
+    - analyzed _(facultatif)_ : vide par défaut = tous les projets | 'analyzed' = projets déjà analysés | 'not-analyzed' = projets pas encore analysés 
+    ```
+      {
+          "return_code": "OK",
+          "count_result": 2,
+          "return": [
+              {
+                  "id": 13,
+                  "slug": "5b003a7a1965a79996581b10a19fa1fb5a6f2c57c17f6",
+                  "email": "d.sandron@it-akademy.fr",
+                  "repository_url": "https://github.com/dimsand/TP_E-Commerce.git",
+                  "analyzed": null,
+                  "created_at": "2018-01-29 14:14:47",
+                  "updated_at": "2018-01-29 14:14:47",
+                  "user_id": 1
+              },
+              {
+                  "id": 14,
+                  "slug": "5b003a7a1965a79996581b10a19fa1fb5a6f307f759e4",
+                  "email": "d.sandron@it-akademy.fr",
+                  "repository_url": "https://github.com/dimsand/TP_E-Commerce.git",
+                  "analyzed": null,
+                  "created_at": "2018-01-29 14:32:31",
+                  "updated_at": "2018-01-29 14:32:31",
+                  "user_id": 1
+              }
+          ]
+      }
+    ```
+  
+- **[POST]** http://localhost:8888/api/contact _(gestion du formulaire de contact)_
+  - fullname : nom complet de l'émetteur du mail
+  - email : email de l'émetteur du mail
+  - sujet : sujet du mail
+  - message : contenu du mail 
   ```
     {
-        "return_code": "OK",
-        "count_result": 2,
-        "return": [
-            {
-                "id": 13,
-                "slug": "5b003a7a1965a79996581b10a19fa1fb5a6f2c57c17f6",
-                "email": "d.sandron@it-akademy.fr",
-                "repository_url": "https://github.com/dimsand/TP_E-Commerce.git",
-                "analyzed": null,
-                "created_at": "2018-01-29 14:14:47",
-                "updated_at": "2018-01-29 14:14:47",
-                "user_id": 1
-            },
-            {
-                "id": 14,
-                "slug": "5b003a7a1965a79996581b10a19fa1fb5a6f307f759e4",
-                "email": "d.sandron@it-akademy.fr",
-                "repository_url": "https://github.com/dimsand/TP_E-Commerce.git",
-                "analyzed": null,
-                "created_at": "2018-01-29 14:32:31",
-                "updated_at": "2018-01-29 14:32:31",
-                "user_id": 1
-            }
-        ]
-    }
+          "return_code": "OK",
+          "return": "Email envoyé avec succès"
+      }
   ```
