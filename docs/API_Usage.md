@@ -267,6 +267,6 @@
   ```
     {
           "return_code": "OK",
-          "return": "Email envoyé avec succès"
+          "return": "Email sent with success"
       }
   ```

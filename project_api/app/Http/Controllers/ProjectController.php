@@ -46,13 +46,13 @@ class ProjectController extends Controller
         $user = Auth::user();
         switch ($analyzed) {
             case 'analyzed':
-                $projects = Project::where('user_id', $user->id)->whereNotNull('analyzed')->get();
+                $projects = Project::where('user_id', $user->id)->whereNotNull('analyzed')->orderBy('created_at', 'desc')->get();
                 break;
             case 'not-analyzed':
-                $projects = Project::where('user_id', $user->id)->whereNull('analyzed')->get();
+                $projects = Project::where('user_id', $user->id)->whereNull('analyzed')->orderBy('created_at', 'desc')->get();
                 break;
             case null:
-                $projects = Project::where('user_id', $user->id)->get();
+                $projects = Project::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
                 break;
             default:
                 return response()->json(array('return_code' => "FAILED", 'error' => "Unknown parameter ('analyzed' or 'not-analyzed')"));
