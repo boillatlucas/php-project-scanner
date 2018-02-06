@@ -45,7 +45,35 @@
         </tr>
         <tr>
             <td style="padding: 20px 0; text-align: center; width: 100%;">
-                <p>Vous pourrez retrouvez votre rapport depuis l'application.</p>
+                <p style="background-color: #cbcbcb; padding: 10px; border: solid #1d1d1d 2px; color: #1d1d1d;">
+                    Vous pourrez retrouvez votre rapport depuis <strong>l'application</strong>.<br><br>
+                    <a style="color: #1d1d1d; text-decoration: none; background-color: #eaeaea; padding: 7px; border: solid #505050 1px; border-radius: 5px; font-size: 14px;" href="{{ $route_project_get_logs }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 325 325" enable-background="new 0 0 325 325" style="height: 15px;">
+                            <g>
+                                <g>
+                                    <path d="m299,0h-273c-9.374,0-17,7.626-17,17v291c0,9.374 7.626,17 17,17h273c9.374,0 17-7.626 17-17v-291c0-9.374-7.626-17-17-17zm7,308c0,3.859-3.141,7-7,7h-273c-3.86,0-7-3.141-7-7v-291c0-3.86 3.14-7 7-7h273c3.859,0 7,3.14 7,7v291z"></path>
+                                    <path d="m74,216h-21c-9.374,0-17,7.626-17,17v21c0,9.374 7.626,17 17,17h21c9.374,0 17-7.626 17-17v-21c0-9.374-7.626-17-17-17zm7,38c0,3.859-3.14,7-7,7h-21c-3.86,0-7-3.141-7-7v-21c0-3.859 3.14-7 7-7h21c3.86,0 7,3.141 7,7v21z"></path>
+                                    <path d="M87.756,61.051C84.664,56.788,79.657,54,74,54H53c-9.374,0-17,7.626-17,17v21c0,9.374,7.626,17,17,17h21    c9.374,0,17-7.626,17-17V71c0-0.533-0.032-1.059-0.08-1.58l12.748-12.748l-5.766-5.767L87.756,61.051z M81,92c0,3.86-3.14,7-7,7    H53c-3.86,0-7-3.14-7-7V71c0-3.86,3.14-7,7-7h21c2.917,0,5.42,1.795,6.471,4.336L65.216,83.591L54.928,73.304l-5.656,5.656    l13.576,13.576l0.015-0.016L65.34,95L81,79.34V92z"></path>
+                                    <path d="m97.902,131.905l-10.146,10.146c-3.092-4.263-8.099-7.051-13.756-7.051h-21c-9.374,0-17,7.626-17,17v21c0,9.374 7.626,17 17,17h21c9.374,0 17-7.626 17-17v-21c0-0.533-0.032-1.059-0.08-1.58l12.748-12.748-5.766-5.767zm-16.902,41.095c0,3.859-3.14,7-7,7h-21c-3.86,0-7-3.141-7-7v-21c0-3.86 3.14-7 7-7h21c2.917,0 5.42,1.795 6.471,4.336l-15.255,15.255-10.288-10.287-5.656,5.656 13.576,13.576 .015-.016 2.477,2.48 15.66-15.66v12.66z"></path>
+                                    <rect width="153" x="113" y="59" height="9"></rect>
+                                    <rect width="81" x="113" y="77" height="9"></rect>
+                                    <rect width="153" x="113" y="149" height="9"></rect>
+                                    <rect width="126" x="113" y="167" height="9"></rect>
+                                    <rect width="144" x="113" y="230" height="9"></rect>
+                                </g>
+                            </g>
+                        </svg>
+                        Voir le rapport
+                    </a>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px 0; text-align: center; width: 100%;">
+                <p>
+                    <strong>RAPPEL :</strong><br>
+                    Si vous étiez connecté à votre compte, vous pourrez retrouver le rapport d'analyse dans <strong><a style="color: #1d1d1d;" href="{{ $route_user_projects }}">la liste de vos projets analaysés</a></strong>.
+                </p>
             </td>
         </tr>
     </table>

@@ -29,11 +29,6 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
     public function getCommand(): array
     {
         return [
-            'composer' => [
-                'global',
-                'require',
-                'wapmorgan/php-code-fixer',
-            ],
             '/root/.composer/vendor/bin/phpcf' => [
                 'project',
             ],
@@ -53,18 +48,18 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
             }else {
                 if (preg_match('/PHP\s+\|\s+Type\s+\|\s+File:Line\s+\|\s+Issue/', $this->prec_line) && preg_match('/^Peak memory usage:/', $line_without_tab)) {
                     $this->success = self::STATUS_SUCCESS;
-                    $this->final_output = "Aucune dépréciation n'a été trouvé dans le projet.";
+                    $this->final_output = "No depreciation was found in the project.";
                 } else if (preg_match('/PHP\s+\|\s+Type\s+\|\s+File:Line\s+\|\s+Issue/', $this->prec_line) || ($this->nb_depreciations_founded > 0 && !preg_match('/^Peak memory usage:/', $line_without_tab))) {
                     $this->nb_depreciations_founded++;;
                 } else if (preg_match('/^Peak memory usage:/', $line_without_tab)) {
                     $this->success = self::STATUS_WARNING;
                     if ($this->nb_depreciations_founded > 1) {
-                        $this->final_output = $this->nb_depreciations_founded . " dépréciations ont été trouvées dans le projet.";
+                        $this->final_output = $this->nb_depreciations_founded . " depreciations founded in the project.";
                     } else {
-                        $this->final_output = $this->nb_depreciations_founded . " dépréciation a été trouvée dans le projet.";
+                        $this->final_output = $this->nb_depreciations_founded . " depreciation founded in the project.";
                     }
                 } else {
-                    $this->final_output = "Erreur lors de l'exécution de l'outil " . $this->getName();
+                    $this->final_output = "Error during the execution of the tool : " . $this->getName();
                 }
             }
         }

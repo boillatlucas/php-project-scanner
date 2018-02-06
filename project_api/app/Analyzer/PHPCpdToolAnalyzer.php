@@ -26,11 +26,6 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
     function getCommand(): array
     {
         return [
-            'composer' => [
-                'global',
-                'require',
-                'sebastian/phpcpd',
-            ],
             '/root/.composer/vendor/bin/phpcpd' => [
                 'project',
             ],
@@ -51,13 +46,13 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
                 if (preg_match('/^(\d+.\d+%)\s+duplicated lines out of (\d+)\s+total lines of code./', $line_without_tab, $matches)) {
                     if ($matches[1] == '0.00%') {
                         $this->success = self::STATUS_SUCCESS;
-                        $this->final_output = " Aucun doublon n'a été trouvé dans le projet.";
+                        $this->final_output = "No duplicated lines were found in the project.";
                     } else {
                         $this->success = self::STATUS_WARNING;
-                        $this->final_output = $matches[1] . " lignes dupliqués ont été trouvées, sur un total de " . $matches[2] . " lignes.";
+                        $this->final_output = $matches[1] . " duplicated lines founded, out of " . $matches[2] . " lines of project code.";
                     }
                 } else {
-                    $this->final_output = "Erreur lors de l'exécution de l'outil " . $this->getName();
+                    $this->final_output = "Error during the execution of the tool : " . $this->getName();
                 }
             }
         }

@@ -26,11 +26,6 @@ class PHPLocToolAnalyzer extends BaseAnalyzer
     function getCommand(): array
     {
         return [
-            'composer' => [
-                'global',
-                'require',
-                'phploc/phploc',
-            ],
             '/root/.composer/vendor/bin/phploc' => [
                 'project',
             ],
@@ -50,9 +45,9 @@ class PHPLocToolAnalyzer extends BaseAnalyzer
             } else {
                 if (preg_match('/Class Constants/', $line_without_tab)) {
                     $this->success = self::STATUS_STATS;
-                    $this->final_output = "Statistiques sur les fichiers de votre projet";
+                    $this->final_output = "Statistics files of the project";
                 } else {
-                    $this->final_output = "Erreur lors de l'exécution de l'outil " . $this->getName();
+                    $this->final_output = "Error during the execution of the tool : " . $this->getName();
                 }
             }
         }

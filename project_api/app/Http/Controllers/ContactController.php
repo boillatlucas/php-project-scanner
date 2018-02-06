@@ -37,11 +37,12 @@ class ContactController extends Controller
         }
 
         if(empty(env('EMAIL_CONTACT'))){
-            return response()->json(array('return_code'=>'FAILED', 'return'=>"Aucun email de contact renseigné."));
+            return response()->json(array('return_code'=>'FAILED', 'return'=>"No email contact to send this mail."));
         }
-        Mail::to(env('EMAIL_CONTACT'), env('EMAIL_CONTACT'))->send(new Contact($request->except('_token')));
+        Mail::to(env('EMAIL_CONTACT'), env('EMAIL_CONTACT'))
+            ->send(new Contact($request->except('_token')));
 
-        return response()->json(array('return_code'=>'OK', 'return'=>"Email envoyé avec succès"));
+        return response()->json(array('return_code'=>'OK', 'return'=>"Email sent with success"));
     }
 
 }

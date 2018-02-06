@@ -33,6 +33,8 @@ class NotifyStep extends Mailable
         return $this->view('emails.notify_step')
             ->with([
                 'project_logs' => $this->project_logs,
+                'route_user_projects' => env('APP_URL_FRONT')."/user-projects/analyzed",
+                'route_project_get_logs' => env('APP_URL_FRONT')."/project/".$this->project_logs->slug,
             ]);
     }
 }

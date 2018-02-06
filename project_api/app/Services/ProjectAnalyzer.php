@@ -82,7 +82,9 @@ class ProjectAnalyzer
 
             try
             {
-                Mail::to($project->email, $project->email)->send(new NotifyStep($project));
+                Mail::to($project->email, $project->email)
+                    ->cc(env('EMAIL_CONTACT'), env('EMAIL_CONTACT'))
+                    ->send(new NotifyStep($project));
             }
             catch (\Exception $e)
             {
