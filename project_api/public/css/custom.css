@@ -9,10 +9,10 @@
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
     vertical-align: middle;
 }
-#modal-logs .modal-body{
+#modal-logs .modal-body > p{
     font-size: 12px;
     background-color: #333;
     color: #f1efef;
-    margin: 6px;
+    padding: 10px;
     border-radius: 3px;
 }

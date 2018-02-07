@@ -19,16 +19,25 @@ use App\LogType;
 use App\Mail\NotifyStep;
 use App\Project;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log as Logger;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+
 
 class ProjectAnalyzer
 {
 
+
     public static function analyze()
     {
+        $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest', '/');
+        $channel = $connection->channel();
+        $channel->queue_declare('analyze', false, true, false, false);
+        $channel->basic_qos(null, 1, null);
 
-        \Amqp::consume('analyze', function ($message, $resolver) {
-            $resolver->acknowledge($message);
+        $channel->basic_consume('analyze', '', false, false, false, false, function ($message) {
+            $message->delivery_info['channel']->basic_ack($message->delivery_info['delivery_tag']);
 
+            Logger::info('[Execute analyze from '.exec('hostname -i').' '.exec('hostname').'] - '.$message->body);
             $project = Project::where('slug', '=', $message->body)->first();
 
             if ($project === null) {
@@ -90,9 +99,11 @@ class ProjectAnalyzer
             {
                 return $e->getMessage();
             }
-
-            $resolver->stopWhenProcessed();
         });
 
+        while (count($channel->callbacks)) {
+            $channel->wait(null, false, 0);
+        }
+        Logger::info('[End analyze from '.exec('hostname -i').' '.exec('hostname').']');
     }
 }

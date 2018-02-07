@@ -53,14 +53,25 @@ class AdminController extends Controller
     public function ajax_relaunch_project_analyze(Request $request){
         $slug = $request->slug;
         \Amqp::publish('project_consume', $slug, ['queue' => 'analyze']);
-        ProjectAnalyzer::analyze();
-        $project_update = Project::where('slug', $slug)->first();
-        return response()->json(array('rc'=>"0", 'return'=>"Project added to queue for reanalyze.", 'project_date_analyzed'=>$project_update->analyzed->format('d/m/Y H:i:s')));
+        return response()->json(array('rc'=>"0", 'return'=>"Project added to queue for reanalyze."));
     }
 
     public function ajax_modal_project_logs(){
-        $logs = "TEST";
-        $logs = file_get_contents("../storage/logs/laravel.log");
+        $logs_file = file_get_contents("../storage/logs/laravel.log");
+        $logs = array();
+        date_default_timezone_set('UTC');
+        foreach (explode(PHP_EOL, $logs_file) as $log_line){
+            if(preg_match('/\[(['.date("Y").'\-'.date("m").'\-'.date("d").']+\s+'.date("H", strtotime("-1 hour")).':[\d\:\d]+)\] local\.INFO: \[Execute analyze/', $log_line)){
+                array_push($logs, "<p>");
+            }
+            if(preg_match('/\[(['.date("Y").'\-'.date("m").'\-'.date("d").']+\s+'.date("H", strtotime("-1 hour")).':[\d\:\d]+)\] local\.INFO:/', $log_line)){
+                array_push($logs, $log_line);
+                array_push($logs, "<br>");
+            }
+            if(preg_match('/\[(['.date("Y").'\-'.date("m").'\-'.date("d").']+\s+'.date("H", strtotime("-1 hour")).':[\d\:\d]+)\] local\.INFO: \[End analyze/', $log_line)){
+                array_push($logs, "</p>");
+            }
+        }
         return view('admin.modals.projects_logs')
             ->with(['logs'=>$logs]);
     }
