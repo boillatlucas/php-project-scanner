@@ -18,9 +18,6 @@ RUN docker-php-ext-install -j$(nproc) zip bcmath pdo_mysql intl gmp sodium && \
 
 COPY ./laravel.ini /usr/local/etc/php/conf.d
 
-COPY ./crontab /etc/cron.d
-RUN chmod -R 644 /etc/cron.d
-RUN service cron restart
 
 RUN apt-get clean
 

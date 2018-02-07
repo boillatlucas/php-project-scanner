@@ -29,9 +29,7 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
     public function getCommand(): array
     {
         return [
-            '/root/.composer/vendor/bin/phpcf' => [
-                'project',
-            ],
+            '/root/.composer/vendor/bin/phpcf',
         ];
     }
 
