@@ -65,6 +65,14 @@ class PHPLocToolAnalyzer extends BaseAnalyzer
     /**
      * @return string
      */
+    public static function getDescription(): string
+    {
+        return 'Phploc is a tool for quickly measuring the size and analyzing the structure of a PHP project.';
+    }
+
+    /**
+     * @return string
+     */
     public static function getType(): string
     {
         return 'STATS';

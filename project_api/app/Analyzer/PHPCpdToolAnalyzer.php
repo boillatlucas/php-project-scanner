@@ -64,6 +64,14 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
         return 'PHPCPD';
     }
 
+    /**
+     * @return string
+     */
+    public static function getDescription(): string
+    {
+        return 'Phpcpd is a Copy/Paste Detector (CPD) for PHP code.';
+    }
+
     public static function getType(): string
     {
         return 'WARNING';
