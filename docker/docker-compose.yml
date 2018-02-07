@@ -7,8 +7,7 @@ services:
         - ${APPLICATION}:/var/www
 
     mysql:
-      build:
-        context: ./mysql
+      image: abdev/php-sec_mysql
       environment:
         - MYSQL_DATABASE=${MYSQL_DATABASE}
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -19,33 +18,25 @@ services:
         - backend
 
     php-fpm:
-      build:
-        context: ./php-fpm
-        args:
-          - USER_PNAME=${USER_PNAME}
-          - USER_PUID=${USER_PUID}
-          - USER_PGID=${USER_PGID}
+      image: abdev/php-sec_php-master
       volumes_from:
         - applications
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-      ports:
-        - "2375:2375"
-      extra_hosts:
-        - "dockerhost:${DOCKER_HOST_IP}"
       depends_on:
         - mysql
-      environment:
-        - APP_DOCKER_SOCKET_HOST=${APP_DOCKER_SOCKET_HOST}
+      networks:
+        - backend
+
+    php-worker:
+      image: abdev/php-sec_php-worker
+      volumes_from:
+        - applications
+      depends_on:
+        - mysql
       networks:
         - backend
 
     nginx:
-      build:
-        context: ./nginx
-        args:
-          - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
-          - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
+      image: abdev/php-sec_nginx
       volumes_from:
         - applications
       volumes:
@@ -61,13 +52,14 @@ services:
         - backend
 
     rabbitmq:
-      build: ./rabbitmq
+      image: abdev/php-sec_rabbitmq
       ports:
         - "${RABBITMQ_MANAGEMENT_HTTP_HOST_PORT}:15672"
         - "${RABBITMQ_MANAGEMENT_HTTPS_HOST_PORT}:15671"
       privileged: true
       depends_on:
         - php-fpm
+        - php-worker
       environment:
         - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
         - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}

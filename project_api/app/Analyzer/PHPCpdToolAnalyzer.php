@@ -26,9 +26,7 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
     function getCommand(): array
     {
         return [
-            '/root/.composer/vendor/bin/phpcpd' => [
-                'project',
-            ],
+            '/root/.composer/vendor/bin/phpcpd',
         ];
     }
 
