@@ -26,6 +26,8 @@ class PHPParallelLintToolAnalyzer extends BaseAnalyzer
     {
         return [
             '/root/.composer/vendor/bin/parallel-lint',
+            '-p',
+            '/usr/local/bin/php',
         ];
     }
 

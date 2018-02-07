@@ -38,9 +38,15 @@ class Analyzer
                 throw new \LogicException('Class "'.get_class($class).'" must implement "'.AnalyzerToolInterface::class.'"');
             }
 
-            foreach ($class->getCommand() as $args) {
-                $class->setOutput((string)$this->execute([$args, $path]));
-            }
+            $args = [];
+            $args[] = '/usr/local/bin/php';
+            $args[] = implode(' ', $class->getCommand());
+            $args[] = $path;
+            $args[] = '2>&1';
+            $output = (string) $this->execute($args);
+
+            Logger::info('[Output] '.$output);
+            $class->setOutput($output);
         }
 
         $this->execute(['rm', '-Rf', $path]);

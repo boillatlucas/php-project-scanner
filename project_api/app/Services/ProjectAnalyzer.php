@@ -29,7 +29,6 @@ class ProjectAnalyzer
 
     public static function analyze()
     {
-
         $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest', '/');
         $channel = $connection->channel();
         $channel->queue_declare('analyze', false, true, false, false);
@@ -38,7 +37,7 @@ class ProjectAnalyzer
         $channel->basic_consume('analyze', '', false, false, false, false, function ($message) {
             $message->delivery_info['channel']->basic_ack($message->delivery_info['delivery_tag']);
 
-            Logger::info('[Execute analyze from '.exec('hostname -i').'] - '.$message->body);
+            Logger::info('[Execute analyze from '.exec('hostname -i').' '.exec('hostname').'] - '.$message->body);
             $project = Project::where('slug', '=', $message->body)->first();
 
             if ($project === null) {

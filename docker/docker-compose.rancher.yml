@@ -23,8 +23,6 @@ services:
         image: abdev/php-sec_php-fpm
         labels:
             io.rancher.sidekicks: app-php-fpm
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
         volumes_from:
             - app-php-fpm
         stdin_open: true
@@ -52,15 +50,18 @@ services:
         links:
             - php-fpm
 
-    # Workaround for app, docker API can't pull image without build
-    # Declare php-analyzer as a service with restart policy set to no do the thing
-    php-analyzer:
-        image: abdev/php-sec_php-analyzer
+    app-php-worker:
+        image: abdev/php-sec_php-worker
         labels:
-            io.rancher.container.pull_image: always
-        restart: 'no'
-        tty: true
-        stdin_open: true
+            io.rancher.sidekicks: app-php-worker
+        volumes_from:
+            - app-php-worker
+        depends_on:
+            - mysql
+            - rabbitmq
+        links:
+            - mysql
+            - rabbitmq
 
     lb:
         image: rancher/load-balancer-service
