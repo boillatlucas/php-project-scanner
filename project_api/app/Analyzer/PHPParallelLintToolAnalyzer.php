@@ -61,6 +61,14 @@ class PHPParallelLintToolAnalyzer extends BaseAnalyzer
         return 'PHP Parallel Lint';
     }
 
+    /**
+     * @return string
+     */
+    public static function getDescription(): string
+    {
+        return 'This tool checks syntax of PHP files faster than serial check with a fancier output.';
+    }
+
     public static function getType(): string
     {
         return 'ERROR';

@@ -78,6 +78,14 @@ class PHPCodeFixerToolAnalyzer extends BaseAnalyzer
     /**
      * @return string
      */
+    public static function getDescription(): string
+    {
+        return 'PHP_CodeSniffer is a set of two PHP scripts; the main phpcs script that tokenizes PHP, JavaScript and CSS files to detect violations of a defined coding standard.';
+    }
+
+    /**
+     * @return string
+     */
     public static function getType(): string
     {
         return 'WARNING';
