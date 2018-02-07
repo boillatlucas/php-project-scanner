@@ -20,7 +20,7 @@ services:
             io.rancher.container.pull_image: always
 
     php-fpm:
-        image: abdev/php-sec_php-fpm
+        image: abdev/php-sec_php-master
         labels:
             io.rancher.sidekicks: app-php-fpm
         volumes_from:
@@ -51,6 +51,11 @@ services:
             - php-fpm
 
     app-php-worker:
+        image: abdev/php-sec_code
+        labels:
+            io.rancher.container.pull_image: always
+
+    php-worker:
         image: abdev/php-sec_php-worker
         labels:
             io.rancher.sidekicks: app-php-worker
