@@ -15,15 +15,10 @@
                 </thead>
                 <tbody>
                 @foreach($tools as $t)
-                    <?php //dump($t); exit(); ?>
                     <tr>
                         <td>{{ $t['name'] }}</td>
                         <td>{{ $t['description'] }}</td>
-                        <td>
-                            @foreach($t['command_exec'] as $keyce => $ce)
-                                {{ $keyce }} {{ $ce[0] }}
-                            @endforeach
-                        </td>
+                        <td>{{ implode(" ", $t['command_exec']) }}</td>
                         <td>{{ $t['file'] }}</td>
                     </tr>
                 @endforeach

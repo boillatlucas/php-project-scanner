@@ -36,7 +36,7 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
      */
     protected function formatLine(string $line): string
     {
-        $line_without_tab = trim(str_replace("\r", '', $line));
+        $line_without_tab = trim(str_replace(array("\r", "/tmp/".$this->path_container."/"), array('',''), $line));
         if($this->success == self::STATUS_ERROR){
             if (preg_match('/^\s+/', $line_without_tab) || preg_match('/^\.+/', $line_without_tab) || $line_without_tab == ""){
                 $line_without_tab = "";

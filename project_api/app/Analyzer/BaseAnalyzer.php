@@ -8,7 +8,6 @@
 
 namespace App\Analyzer;
 
-
 abstract class BaseAnalyzer implements AnalyzerToolInterface
 {
 
@@ -36,6 +35,11 @@ abstract class BaseAnalyzer implements AnalyzerToolInterface
      * @var string
      */
     protected $final_output = "";
+
+    /**
+     * @var string
+     */
+    protected $path_container = "";
 
     /**
      * You need to follow this structure
@@ -110,5 +114,15 @@ abstract class BaseAnalyzer implements AnalyzerToolInterface
     public function finalOutput(): string
     {
         return $this->final_output;
+    }
+
+    /**
+     * @param string $path_container
+     * @return $this|mixed
+     */
+    public function setPathContainer(string $path_container)
+    {
+        $this->path_container = $path_container;
+        return $this;
     }
 }

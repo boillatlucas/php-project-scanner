@@ -45,7 +45,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Laravel logs <small>Last projects logs</small></h4>
+                    <h4 class="modal-title">Laravel logs <small>Last projects logs (1 hour ago)</small></h4>
                 </div>
                 <div class="modal-body">
                     <img src='img/loader-blue-25.gif'> Content is loading...
@@ -62,7 +62,6 @@
     <script>
         $(document).on('click', '.relaunchAnalyze', function(e){
             var td = $(this).parent();
-            td.html("<div class='alert alert-info'>Analyze relaunched <img src='img/loader-blue-25.gif'></div>");
             e.preventDefault();
             $.ajax({
                 method: "POST",
@@ -73,7 +72,7 @@
                 data: { slug: $(this).attr('rel') }
             }).done(function( data ) {
                 if(data.rc == '0'){
-                    td.html('<span style="color: green;" class="glyphicon glyphicon-ok"></span> ' + data.project_date_analyzed);
+                    td.html("<div class='alert alert-info'>Analyze relaunched</div>");
                 }else{
                     td.html("<div class='alert alert-danger'><span style='color: red;' class='glyphicon glyphicon-ok'></span> Analyze can't be relaunched</div>");
                 }

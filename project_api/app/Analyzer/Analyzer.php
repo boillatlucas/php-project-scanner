@@ -19,15 +19,17 @@ class Analyzer
     /**
      * @param string $name
      * @param string $repository
+     * @param string $branch
      * @param AnalyzerToolInterface[] $classes
      */
-    public function run(string $name, string $repository, array $classes)
+    public function run(string $name, string $repository, string $branch, array $classes)
     {
         $path = '/tmp/'.$name;
 
         $this->execute([
             'git',
             'clone',
+            '-b '.$branch,
             '--depth=1',
             $repository,
             $path,
