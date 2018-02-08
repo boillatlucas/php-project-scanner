@@ -1,8 +1,5 @@
 version: '2'
 services:
-  php-analyzer:
-    scale: 1
-    start_on_create: false
   app-php-fpm:
     scale: 1
     start_on_create: true
@@ -19,12 +16,6 @@ services:
         service: nginx
         source_port: 8888
         target_port: 80
-      config: |-
-        global
-            maxconn 4096
-            maxpipes 1024
-        nginx 80
-            balance leastconn
     health_check:
       response_timeout: 2000
       healthy_threshold: 2
@@ -39,9 +30,15 @@ services:
   app-nginx:
     scale: 1
     start_on_create: true
+  app-php-worker:
+    scale: 3
+    start_on_create: true
   php-fpm:
     scale: 1
     start_on_create: true
   rabbitmq:
     scale: 1
+    start_on_create: true
+  php-worker:
+    scale: 3
     start_on_create: true
