@@ -47,7 +47,8 @@ class PassportController extends Controller
             'c_password' => 'required|same:password',
         ],
         [
-            'c_password.required' => 'The confirm password is required'
+            'same' => 'The confirm password and password must match.',
+            'c_password.required' => 'The confirm password is required.'
         ]);
 
         if ($validator->fails()) {
@@ -58,7 +59,7 @@ class PassportController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user_exist = User::where('email', $input['email'])->first();
         if($user_exist){
-            return response()->json(['error' => "An user already exist with this email."], 401);
+            return response()->json(['error' => ["An user already exist with this email."]], 401);
         }
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
