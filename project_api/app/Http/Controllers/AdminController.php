@@ -45,7 +45,7 @@ class AdminController extends Controller
             Auth::logout();
             return view('auth.login');
         }
-        $projects = Project::with('users')->orderBy('created_at', 'desc')->get();
+        $projects = Project::with('user')->orderBy('created_at', 'desc')->get();
         return view('admin.projects')
             ->with(['projects' => $projects]);
     }

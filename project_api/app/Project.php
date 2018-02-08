@@ -14,7 +14,7 @@ class Project extends Model
         return $this->hasMany('App\Log');
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }
