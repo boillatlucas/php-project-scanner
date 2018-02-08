@@ -41,7 +41,7 @@ RUN /tmp/composer-install.sh && \
 RUN chown -R $USER_PNAME:www-data /var/www
 
 CMD cron && \
-    php /var/www/artisan migrate && \
+    php /var/www/artisan migrate --seed && \
     php /var/www/artisan passport:install && \
     php-fpm
 
