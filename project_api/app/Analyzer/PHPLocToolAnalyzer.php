@@ -26,9 +26,7 @@ class PHPLocToolAnalyzer extends BaseAnalyzer
     function getCommand(): array
     {
         return [
-            '/root/.composer/vendor/bin/phploc' => [
-                'project',
-            ],
+            '/root/.composer/vendor/bin/phploc',
         ];
     }
 

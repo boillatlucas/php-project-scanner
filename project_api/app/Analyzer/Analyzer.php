@@ -7,91 +7,61 @@
  */
 
 namespace App\Analyzer;
-
-
-use App\Services\EnvironmentService;
+use Illuminate\Support\Facades\Log as Logger;
 
 class Analyzer
 {
     /**
-     * @var EnvironmentService
+     * @var string
      */
-    private $environment;
-
-    /**
-     * @var array|null
-     */
-    private $context;
-
-    /**
-     * Analyzer constructor.
-     */
-    public function __construct()
-    {
-        $this->environment = new EnvironmentService();
-    }
+    private $path;
 
     /**
      * @param string $name
      * @param string $repository
+     * @param string $branch
      * @param AnalyzerToolInterface[] $classes
      */
-    public function run(string $name, string $repository, array $classes)
+    public function run(string $name, string $repository, string $branch, array $classes)
     {
-        if ($this->context === null) {
-            $this->createContext($name, $repository);
-        }
+        $path = '/tmp/'.$name;
+
+        $this->execute([
+            'git',
+            'clone',
+            '-b '.$branch,
+            '--depth=1',
+            $repository,
+            $path,
+        ]);
 
         foreach ($classes as $class) {
             if (!$class instanceof AnalyzerToolInterface) {
                 throw new \LogicException('Class "'.get_class($class).'" must implement "'.AnalyzerToolInterface::class.'"');
             }
 
-            foreach ($class->getCommand() as $bin => $args) {
-                array_unshift($args, $bin);
+            $args = [];
+            $args[] = '/usr/local/bin/php';
+            $args[] = implode(' ', $class->getCommand());
+            $args[] = $path;
+            $args[] = '2>&1';
+            $output = (string) $this->execute($args);
 
-                $class->setOutput($this->executeCommand($args));
-            }
+            Logger::info('[Output] '.$output);
+            $class->setOutput($output);
         }
 
-        $this->rmContainer();
-    }
-
-    /**
-     * @param string $name
-     * @param string $repository
-     */
-    private function createContext(string $name, string $repository)
-    {
-        $json = \GuzzleHttp\json_decode($this->environment->createContainer($name, 'abdev/php-sec_php-analyzer'));
-
-        $this->context['containerId'] = $json->Id;
-
-        $this->environment->startContainer($this->context['containerId']);
-        $this->executeCommand([
-            'git',
-            'clone',
-            '--depth=1',
-            $repository,
-            'project',
-        ]);
+        $this->execute(['rm', '-Rf', $path]);
     }
 
     /**
      * @param array $command
      * @return null|string
      */
-    private function executeCommand(array $command): ?string
+    private function execute(array $command): ?string
     {
-        $cmd = \GuzzleHttp\json_decode($this->environment->createCommand($this->context['containerId'], $command));
+        Logger::info('[Execute command] '.implode(' ', $command));
 
-        return $this->environment->startCommand($cmd->Id);
-    }
-
-    private function rmContainer(): ?string
-    {
-        $this->environment->stopContainer($this->context['containerId']);
-
-        return $this->environment->rmContainer($this->context['containerId']);
+        return shell_exec(implode(' ', $command));
     }
 }

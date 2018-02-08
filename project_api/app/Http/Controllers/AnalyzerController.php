@@ -20,10 +20,12 @@ class AnalyzerController extends Controller
         $repository = $request->request->get('repository');
         $email = $request->request->get('email');
         $slug = str_slug(md5($repository).uniqid());
+        $branch = $request->request->get('branch');
 
         $project = new Project();
         $project->slug = $slug;
         $project->repository_url = $repository;
+        $project->branch = (!empty($branch)) ? $branch : 'master';
         if (Auth::check()) {
             $user = Auth::user();
             $project->user_id = $user->id;

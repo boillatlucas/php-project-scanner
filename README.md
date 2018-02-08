@@ -6,14 +6,21 @@ Il permet d'avoir un rapport sur des stats et des problèmes de sécurité liés
 
 Plusieurs projets peuvent être demandés à être analyser. Lorsqu'un projet est terminé, un email est envoyé pour prévenir l'utilisateur.
 
+[Lien du Front Github](https://github.com/boillatlucas/php-project-front)
+
 ## Structure
 
 - project_api : Application Laravel (l'API)
-- laradock : containers docker permettant de faire tourner l'appli laravel
-	- **App Laravel** : http://localhost:8888
-    - **PhpMyAdmin** : http://localhost:8080
-    - **RabbitMQ (interface)** : http://localhost:15672
-    - **MailDev** : http://localhost:1080
+- docker : containers docker permettant de faire tourner l'appli laravel
+	- PROD:
+	    - **App Laravel - PHP-FPM/nginx** : http://localhost:8888
+        - **RabbitMQ (interface)** : http://localhost:15672
+        - **Lancement des outils d'analyse - PHP-WORKER**
+        - **MySQL**
+    - DEV
+        - **PhpMyAdmin** : http://localhost:8080
+        - **MailDev** : http://localhost:1080
+- docs : API_Usage
 
 
 ## Requierments 
@@ -22,7 +29,7 @@ Plusieurs projets peuvent être demandés à être analyser. Lorsqu'un projet es
 ## Installation
 
 1. Cloner ce repot git
-2. Entrer dans le dossier cloné **laradock**
+2. Entrer dans le dossier cloné **docker**
 3. Copier le fichier env-example :
     ```
     cp env-example .env
@@ -30,14 +37,14 @@ Plusieurs projets peuvent être demandés à être analyser. Lorsqu'un projet es
 
 4. Lancer les containers docker :
     ```
-    docker-compose up -d
+    ./docker-build.production.sh && docker-compose up -d
     ```
 
 5. Pour la première fois, créer une base de données vide sur phpmyadmin
 
 6. Aller dans le dossier de l'application laravel en ligne de commande : 
    ```
-   docker-compose exec workspace bash
+   docker-compose exec php-fpm bash
    ```
    
 7. Création des tables dans la BDD (ajouter l'option `--seed` pour la population des tables avec données fictives)

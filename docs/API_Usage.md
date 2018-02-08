@@ -84,7 +84,8 @@
   
 - **[POST]** http://localhost:8888/api/project _(stocke en liste d'attente un projet github à analyser)_
   - repository : adresse url d'un repository Github -en .git
-  - email _(facultatif)_ : email qui recevra l'alerte de l'analyse terminée.
+  - email _(facultatif)_ : email qui recevra l'alerte de l'analyse terminée
+  - branch : branche du repository Github à analyser
   ```
     {
         "return_code": "OK",
@@ -94,6 +95,8 @@
                 "slug": "5b003a7a1965a79996581b10a19fa1fb5a704584ee6e3",
                 "email": "d.sandron@it-akademy.fr",
                 "repository_url": "https://github.com/dimsand/TP_E-Commerce.git",
+                "branch": "feature/admin_back",
+                "user_id": 3,
                 "updated_at": "2018-01-30 10:14:28",
                 "created_at": "2018-01-30 10:14:28",
                 "id": 28
@@ -117,6 +120,7 @@
                 "analyzed": "2018-02-01 10:36:51",
                 "created_at": "2018-02-01 10:35:17",
                 "updated_at": "2018-02-01 10:36:51",
+                "branch": "feature/admin_back",
                 "user_id": 1,
                 "logs": {
                     "SUCCESS": [

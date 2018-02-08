@@ -50,9 +50,14 @@ class ProjectAnalyzer
             $classes[] = new PHPCpdToolAnalyzer();
             $analyzer = new Analyzer();
 
+            foreach ($classes as $class) {
+                $class->setPathContainer($project->slug);
+            }
+
             $analyzer->run(
                 $project->slug,
                 $project->repository_url,
+                $project->branch,
                 $classes
             );
 
@@ -99,11 +104,12 @@ class ProjectAnalyzer
             {
                 return $e->getMessage();
             }
+
+            Logger::info('[End analyze from '.exec('hostname -i').' '.exec('hostname').'] - '.$message->body);
         });
 
         while (count($channel->callbacks)) {
             $channel->wait(null, false, 0);
         }
-        Logger::info('[End analyze from '.exec('hostname -i').' '.exec('hostname').']');
     }
 }

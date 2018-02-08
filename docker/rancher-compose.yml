@@ -17,12 +17,8 @@ services:
       port_rules:
       - protocol: http
         service: nginx
-        source_port: 80
+        source_port: 8888
         target_port: 80
-      - protocol: http
-        service: nginx
-        source_port: 443
-        target_port: 443
       config: |-
         global
             maxconn 4096

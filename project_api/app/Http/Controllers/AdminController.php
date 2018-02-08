@@ -30,7 +30,7 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        if(!$request->user()->authorizeRoles(['admin'])){
+        if (!$request->user()->authorizeRoles(['admin'])) {
             $request->session()->flash('flash_error', 'Those are not correct credentials!');
             Auth::logout();
             return view('auth.login');
@@ -40,57 +40,59 @@ class AdminController extends Controller
 
     public function projects(Request $request)
     {
-        if(!$request->user()->authorizeRoles(['admin'])){
+        if (!$request->user()->authorizeRoles(['admin'])) {
             $request->session()->flash('flash_error', 'Those are not correct credentials!');
             Auth::logout();
             return view('auth.login');
         }
-        $projects = Project::with('users')->get();
+        $projects = Project::with('users')->orderBy('created_at', 'desc')->get();
         return view('admin.projects')
-            ->with(['projects'=>$projects]);
+            ->with(['projects' => $projects]);
     }
 
-    public function ajax_relaunch_project_analyze(Request $request){
+    public function ajax_relaunch_project_analyze(Request $request)
+    {
         $slug = $request->slug;
         \Amqp::publish('project_consume', $slug, ['queue' => 'analyze']);
-        return response()->json(array('rc'=>"0", 'return'=>"Project added to queue for reanalyze."));
+        return response()->json(array('rc' => "0", 'return' => "Project added to queue for reanalyze."));
     }
 
-    public function ajax_modal_project_logs(){
-        $logs_file = file_get_contents("../storage/logs/laravel.log");
+    public function ajax_modal_project_logs()
+    {
         $logs = array();
-        date_default_timezone_set('UTC');
-        foreach (explode(PHP_EOL, $logs_file) as $log_line){
-            if(preg_match('/\[(['.date("Y").'\-'.date("m").'\-'.date("d").']+\s+'.date("H", strtotime("-1 hour")).':[\d\:\d]+)\] local\.INFO: \[Execute analyze/', $log_line)){
-                array_push($logs, "<p>");
-            }
-            if(preg_match('/\[(['.date("Y").'\-'.date("m").'\-'.date("d").']+\s+'.date("H", strtotime("-1 hour")).':[\d\:\d]+)\] local\.INFO:/', $log_line)){
-                array_push($logs, $log_line);
-                array_push($logs, "<br>");
-            }
-            if(preg_match('/\[(['.date("Y").'\-'.date("m").'\-'.date("d").']+\s+'.date("H", strtotime("-1 hour")).':[\d\:\d]+)\] local\.INFO: \[End analyze/', $log_line)){
+        if (is_file("../storage/logs/laravel.log")) {
+            $logs_file = file_get_contents("../storage/logs/laravel.log");
+            if ($logs_file) {
                 array_push($logs, "</p>");
+                date_default_timezone_set('UTC');
+                foreach (explode(PHP_EOL, $logs_file) as $log_line) {
+                    if (preg_match('/\[([' . date("Y") . '\-' . date("m") . '\-' . date("d") . ']+\s+' . date("H") . ':[\d\:\d]+)\] local\.+[INFO|ERROR]+:/', $log_line)) {
+                        array_push($logs, $log_line);
+                        array_push($logs, "<br>");
+                    }
+                }
+                array_push($logs, "<p>");
             }
         }
         return view('admin.modals.projects_logs')
-            ->with(['logs'=>$logs]);
+            ->with(['logs' => array_reverse($logs)]);
     }
 
     public function users(Request $request)
     {
-        if(!$request->user()->authorizeRoles(['admin'])){
+        if (!$request->user()->authorizeRoles(['admin'])) {
             $request->session()->flash('flash_error', 'Those are not correct credentials!');
             Auth::logout();
             return view('auth.login');
         }
         $users = User::with('roles')->get();
         return view('admin.users')
-            ->with(['users'=>$users]);
+            ->with(['users' => $users]);
     }
 
     public function tools(Request $request)
     {
-        if(!$request->user()->authorizeRoles(['admin'])){
+        if (!$request->user()->authorizeRoles(['admin'])) {
             $request->session()->flash('flash_error', 'Those are not correct credentials!');
             Auth::logout();
             return view('auth.login');
@@ -98,9 +100,9 @@ class AdminController extends Controller
 
         $exec_tools = shell_exec('cd ../app/Analyzer/ && ls | grep ToolAnalyzer.php');
         $tools = array();
-        foreach (explode(PHP_EOL, $exec_tools) as $key => $t){
-            if($t != ""){
-                $class_name = "App\Analyzer\\".str_replace(".php", "", $t);
+        foreach (explode(PHP_EOL, $exec_tools) as $key => $t) {
+            if ($t != "") {
+                $class_name = "App\Analyzer\\" . str_replace(".php", "", $t);
                 $class = new $class_name();
                 $tools[$key]['name'] = $class->getName();
                 $tools[$key]['type'] = $class->getType();
@@ -110,6 +112,6 @@ class AdminController extends Controller
             }
         }
         return view('admin.tools')
-            ->with(['tools'=>$tools]);
+            ->with(['tools' => $tools]);
     }
 }

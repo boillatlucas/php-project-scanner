@@ -26,9 +26,7 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
     function getCommand(): array
     {
         return [
-            '/root/.composer/vendor/bin/phpcpd' => [
-                'project',
-            ],
+            '/root/.composer/vendor/bin/phpcpd',
         ];
     }
 
@@ -38,7 +36,7 @@ class PHPCpdToolAnalyzer extends BaseAnalyzer
      */
     protected function formatLine(string $line): string
     {
-        $line_without_tab = trim(str_replace("\r", '', $line));
+        $line_without_tab = trim(str_replace(array("\r", "/tmp/".$this->path_container."/"), array('',''), $line));
         if($this->success == self::STATUS_ERROR){
             if (preg_match('/^\s+/', $line_without_tab) || preg_match('/^\.+/', $line_without_tab) || $line_without_tab == ""){
                 $line_without_tab = "";
