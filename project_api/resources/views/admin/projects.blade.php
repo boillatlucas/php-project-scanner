@@ -20,11 +20,11 @@
                 @foreach($projects as $p)
                     <tr>
                         <td>
-                            <a href="{{ $p->repository_url }}">{{ $p->repository_url }}</a>
+                            <span class="glyphicon glyphicon-inbox"></span> <a href="{{ $p->repository_url }}">{{ $p->repository_url }}</a> <span class="label label-{{ ($p->branch == "master") ? 'primary' : 'info' }}">{{ $p->branch }}</span>
                             <br><strong>Slug :</strong> <a href="{{ env('APP_URL_FRONT').'/project/'.$p->slug }}"> {{ $p->slug }} <span class="glyphicon glyphicon-new-window"></span></a>
                             <br><strong>Email :</strong> {{ $p->email }}
                         </td>
-                        <td>{{ (!empty($p->users->name)) ? $p->users->name : '' }}</td>
+                        <td>{{ (!empty($p->user->name)) ? $p->user->name : '' }}</td>
                         <td>{{ $p->created_at->format('d/m/Y H:i:s') }}</td>
                         @if(!empty($p->analyzed))
                             <td>{{ (!empty($p->analyzed)) ? $p->analyzed->format('d/m/Y H:i:s') : '' }}</td>
