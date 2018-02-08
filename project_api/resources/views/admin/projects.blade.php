@@ -72,7 +72,7 @@
                 data: { slug: $(this).attr('rel') }
             }).done(function( data ) {
                 if(data.rc == '0'){
-                    td.html("<div class='alert alert-info'>Analyze relaunched");
+                    td.html("<div class='alert alert-info'>Analyze relaunched</div>");
                 }else{
                     td.html("<div class='alert alert-danger'><span style='color: red;' class='glyphicon glyphicon-ok'></span> Analyze can't be relaunched</div>");
                 }

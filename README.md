@@ -37,7 +37,7 @@ Plusieurs projets peuvent être demandés à être analyser. Lorsqu'un projet es
 
 4. Lancer les containers docker :
     ```
-    ./docker-build.production.sh && docker-compose up -d
+    ./docker-build.production.sh -B && docker-compose up -d
     ```
 
 5. Pour la première fois, créer une base de données vide sur phpmyadmin
