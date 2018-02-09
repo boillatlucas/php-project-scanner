@@ -40,10 +40,12 @@ class ProjectController extends Controller
      */
     public function getProjectsUserConnected($analyzed = null)
     {
-        if (!Auth::check()) {
+        $user = \auth('api')->user();
+
+        if ($user === null) {
             return response()->json(array('return_code' => "FAILED", 'error' => "User doesn't logged."));
         }
-        $user = Auth::user();
+
         switch ($analyzed) {
             case 'analyzed':
                 $projects = Project::where('user_id', $user->id)->whereNotNull('analyzed')->orderBy('created_at', 'desc')->get();
