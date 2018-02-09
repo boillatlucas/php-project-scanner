@@ -26,7 +26,7 @@ class CORS
         $response = $next($request);
 
         // We only want the headers set for the api requests
-        if ($request->segment(1) == 'api') {
+
 
             // Set the default headers for cors If you only want this for OPTION method put this in the if below
             $response->headers->set('Access-Control-Allow-Origin','*');
@@ -41,7 +41,7 @@ class CORS
                 );
             }
 
-        }
+
 
         return $response;
     }
