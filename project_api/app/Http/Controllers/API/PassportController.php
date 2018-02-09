@@ -6,6 +6,7 @@ use Illuminate\Console\Parser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
@@ -74,12 +75,21 @@ class PassportController extends Controller
      */
     public function logoutApi(Request $request)
     {
-        if (Auth::check()) {
+        if (\auth('api')->user() === null) {
+            $json = [
+                ['error' => "You are not logged in."],
+                Response::HTTP_UNAUTHORIZED,
+            ];
+
             $request->user()->token()->revoke();
-            return response()->json(['success' => "You are logout"], $this->successStatus);
-        }else{
-            return response()->json(['error' => "You are not logged in."], 401);
         }
+
+        list($content, $code) = $json ?? [
+            ['success' => "You are logout"],
+            Response::HTTP_OK,
+        ];
+
+        return response()->json($content, $code);
     }
 
     /**

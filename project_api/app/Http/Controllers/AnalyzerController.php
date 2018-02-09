@@ -11,7 +11,6 @@ namespace App\Http\Controllers;
 use App\Project;
 use App\Services\ProjectAnalyzer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AnalyzerController extends Controller
 {
@@ -26,22 +25,31 @@ class AnalyzerController extends Controller
         $project->slug = $slug;
         $project->repository_url = $repository;
         $project->branch = (!empty($branch)) ? $branch : 'master';
-        if (Auth::check()) {
-            $user = Auth::user();
+
+        $user = \auth('api')->user();
+        if ($user) {
             $project->user_id = $user->id;
-            if(!empty($user->email)){
-                $project->email = $user->email;
-            }
+            $project->email = $user->email;
         }
-        if(!empty($email)){
+
+        if (!empty($email)) {
             $project->email = $email;
         }
-        if($project->save()){
+
+        if ($project->save()) {
             \Amqp::publish('project_consume', $slug, ['queue' => 'analyze']);
-            return response()->json(array('return_code' => 'OK', 'return' => array('url_project_logs' => route('project_get_log', ['slug' => $project->slug]), 'project_saved' => $project)));
-        }else{
-            return response()->json(array('return_code' => "FAILED", 'error' => "Save error."));
+            $content = [
+                'return_code' => 'OK',
+                'return' => [
+                    'url_project_logs' => route('project_get_log', ['slug' => $project->slug]),
+                    'project_saved' => $project
+                ]
+            ];
         }
+
+        $content = $content ?? ['return_code' => "FAILED", 'error' => "Save error."];
+
+        return response()->json($content);
     }
 
     public function analyze()
